@@ -16,39 +16,47 @@ function writeLog(operationIdentifier, prevResult, operationNumber, newResult) {
         operation: operationIdentifier, prevResult: prevResult, enteredNumber: operationNumber, result: newResult
     };
     logEntries.push(logEntry);
-    console.log(logEntries);
+    console.log(logEntry);
+}
+
+function calculateResult(calculationType) {
+    const enteredNumber = getUserNumberInput();
+    const initialResult = currentResult;
+    let mathOperator;
+    if (calculationType === "+") {
+        currentResult += enteredNumber;
+        mathOperator = "+";
+    } else if (calculationType === "-") {
+        currentResult -= enteredNumber;
+        mathOperator = "-";
+    } else if (calculationType === "*") {
+        currentResult *= enteredNumber;
+        mathOperator = "*";
+    } else if (calculationType === "/") {
+        currentResult /= enteredNumber;
+        mathOperator = "/";
+    } else {
+        return;
+    }
+
+    createAndWriteOutput(mathOperator, initialResult, enteredNumber);
+    writeLog(mathOperator, initialResult, enteredNumber, currentResult);
 }
 
 function add() {
-    const enteredNumber = getUserNumberInput();
-    const initialResult = currentResult;
-    currentResult += enteredNumber;
-    createAndWriteOutput(("+"), initialResult, enteredNumber);
-    writeLog("+", initialResult, enteredNumber, currentResult);
+    calculateResult("+")
 }
 
 function subtract() {
-    const enteredNumber = getUserNumberInput();
-    const initialResult = currentResult;
-    currentResult -= enteredNumber;
-    createAndWriteOutput(("-"), initialResult, enteredNumber)
-    writeLog("-", initialResult, enteredNumber, currentResult);
+    calculateResult("-")
 }
 
 function multiply() {
-    const enteredNumber = getUserNumberInput();
-    const initialResult = currentResult;
-    currentResult *= enteredNumber;
-    createAndWriteOutput(("*"), initialResult, enteredNumber)
-    writeLog("*", initialResult, enteredNumber, currentResult);
+    calculateResult("*")
 }
 
 function divide() {
-    const enteredNumber = getUserNumberInput();
-    const initialResult = currentResult;
-    currentResult /= enteredNumber;
-    createAndWriteOutput(("/"), initialResult, enteredNumber)
-    writeLog("/", initialResult, enteredNumber, currentResult);
+    calculateResult("/")
 }
 
 
