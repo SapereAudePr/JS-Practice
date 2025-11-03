@@ -1,0 +1,1 @@
+This repo has been created to track and save my personal progress of learning JavaScript.
