@@ -111,47 +111,22 @@ function resetGameHandler() {
 }
 
 function writeToLog(ev, val, monsterHealth, playerHealth) {
-    let logEntry;
+    let logEntry = {
+        event: ev,
+        value: val,
+        finalMonsterHealth: monsterHealth,
+        finalPlayerHealth: playerHealth
+    }
     if (ev === LOG_NORMAL_PLAYER_ATTACK) {
-        logEntry = {
-            event: ev,
-            value: val,
-            target: "MONSTER",
-            finalMonsterHealth: monsterHealth,
-            finalPlayerHealth: playerHealth
-        }
+        logEntry.target = "MONSTER"
     } else if (LOG_STRONG_PLAYER_ATTACK) {
-        logEntry = {
-            event: ev,
-            value: val,
-            target: "MONSTER",
-            finalMonsterHealth: monsterHealth,
-            finalPlayerHealth: playerHealth
-        }
+        logEntry.target = "MONSTER"
     } else if (LOG_PLAYER_HEAL_VALUE) {
-        logEntry = {
-            event: ev,
-            value: val,
-            target: "PLAYER",
-            finalMonsterHealth: monsterHealth,
-            finalPlayerHealth: playerHealth
-        }
-
+        logEntry.target = "HEAL";
     } else if (LOG_MONSTER_ATTACK) {
-        logEntry = {
-            event: ev,
-            value: val,
-            target: "PLAYER",
-            finalMonsterHealth: monsterHealth,
-            finalPlayerHealth: playerHealth
-        }
+        logEntry.target = "PLAYER"
     } else if (LOG_GAME_OVER) {
-        logEntry = {
-            event: ev,
-            value: val,
-            finalMonsterHealth: monsterHealth,
-            finalPlayerHealth: playerHealth
-        }
+        logEntry.target = "GAME_OVER"
     }
     eventLog.push(logEntry);
 }
