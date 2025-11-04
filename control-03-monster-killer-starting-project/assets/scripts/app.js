@@ -61,15 +61,8 @@ function endRound() {
 }
 
 function attackMonster(mode) {
-    let maxDamage;
-    let logEvent;
-    if (mode === MODE_NORMAL_ATTACK) {
-        maxDamage = MAX_PLAYER_ATTACK_VALUE;
-        logEvent = LOG_NORMAL_PLAYER_ATTACK;
-    } else if (mode === MODE_STRONG_ATTACK) {
-        maxDamage = MAX_PLAYER_STRONG_ATTACK_VALUE;
-        logEvent = LOG_STRONG_PLAYER_ATTACK;
-    }
+    const maxDamage = mode === MODE_NORMAL_ATTACK ? MAX_PLAYER_ATTACK_VALUE : MAX_PLAYER_STRONG_ATTACK_VALUE;
+    const logEvent = mode === MODE_NORMAL_ATTACK ? LOG_NORMAL_PLAYER_ATTACK : LOG_STRONG_PLAYER_ATTACK;
 
     const playerDamage = dealMonsterDamage(maxDamage);
     currentMonsterHealth -= playerDamage;
