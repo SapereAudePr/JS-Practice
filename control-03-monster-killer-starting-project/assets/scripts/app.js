@@ -110,17 +110,27 @@ function writeToLog(ev, val, monsterHealth, playerHealth) {
         finalMonsterHealth: monsterHealth,
         finalPlayerHealth: playerHealth
     }
-    if (ev === LOG_NORMAL_PLAYER_ATTACK) {
-        logEntry.target = "MONSTER"
-    } else if (LOG_STRONG_PLAYER_ATTACK) {
-        logEntry.target = "MONSTER"
-    } else if (LOG_PLAYER_HEAL_VALUE) {
-        logEntry.target = "HEAL";
-    } else if (LOG_MONSTER_ATTACK) {
-        logEntry.target = "PLAYER"
-    } else if (LOG_GAME_OVER) {
-        logEntry.target = "GAME_OVER"
+
+    switch (ev) {
+        case LOG_NORMAL_PLAYER_ATTACK:
+            logEntry.target = "MONSTER";
+            break;
+        case LOG_STRONG_PLAYER_ATTACK:
+            logEntry.target = "MONSTER";
+            break;
+        case LOG_PLAYER_HEAL_VALUE:
+            logEntry.target = "HEAL";
+            break;
+        case LOG_MONSTER_ATTACK:
+            logEntry.target = "PLAYER";
+            break;
+        case LOG_GAME_OVER:
+            logEntry.target = "GAME_OVER";
+            break;
+        default:
+            logEntry = {};
     }
+
     eventLog.push(logEntry);
 }
 
