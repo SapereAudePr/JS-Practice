@@ -135,7 +135,12 @@ function writeToLog(ev, val, monsterHealth, playerHealth) {
 }
 
 function printLogHandler() {
-    console.log(eventLog);
+    let index = 0;
+    for (let i = 0; i < eventLog.length; i++) {
+        index++;
+        console.log(`# Number => ${index}`);
+        console.log(eventLog[i]);
+    }
 }
 
 attackBtn.addEventListener('click', attackHandler);
