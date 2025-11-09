@@ -5,17 +5,18 @@ const PAPER = "PAPER";
 const SCISSORS = "SCISSORS";
 const DEFAULT_SELECTION = ROCK;
 
+const SELECTION_OPTIONS = [ROCK, PAPER, SCISSORS];
+
 const getPlayerChoice = function () {
-    const selection = prompt(`What is your choice: ${ROCK}, ${PAPER} or ${SCISSORS}`, "").toUpperCase();
-    if (selection !== ROCK &&
-        selection !== PAPER &&
-        selection !== SCISSORS) {
-        alert(`Invalid choice, ${DEFAULT_SELECTION} is selected for default!`);
-        return DEFAULT_SELECTION;
+    const userInput = prompt(`What is your choice: ${ROCK}, ${PAPER} or ${SCISSORS}`, "").toUpperCase();
+
+    if (SELECTION_OPTIONS.includes(userInput)) {
+        alert(`${userInput} is selected!`);
     } else {
-        alert(`${selection} is selected!`);
+        alert(`Invalid input: ${userInput}! //` + `${DEFAULT_SELECTION} is selected by default!`);
+        return DEFAULT_SELECTION;
     }
-    return selection;
+    return userInput;
 }
 
 startGameBtn.addEventListener(`click`, function () {
