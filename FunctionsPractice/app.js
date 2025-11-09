@@ -42,16 +42,11 @@ const getComputerChoice = function () {
     }
 }
 
-const determineWinner = function (playerChoice, computerChoice) {
-    if (!isGameRunning) return;
-
-    if (playerChoice === computerChoice) {
-        return RESULT_DRAW;
-    } else if (playerChoice === PAPER && computerChoice === ROCK || playerChoice === SCISSORS && computerChoice === PAPER || playerChoice === ROCK && computerChoice === SCISSORS) {
-        return RESULT_PLAYER_WIN;
-    } else {
-        return RESULT_COMPUTER_WIN;
-    }
+const determineWinner = (playerChoice, computerChoice) => {
+    return playerChoice === computerChoice ? RESULT_DRAW :
+        playerChoice === PAPER && computerChoice === ROCK || playerChoice === SCISSORS && computerChoice === PAPER || playerChoice === ROCK && computerChoice === SCISSORS ?
+            RESULT_PLAYER_WIN :
+            RESULT_COMPUTER_WIN;
 }
 
 
