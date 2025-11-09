@@ -12,15 +12,15 @@ const RESULT_COMPUTER_WIN = "COMPUTER_WIN";
 
 let isGameRunning = false;
 
-const getPlayerChoice = function () {
+const getPlayerChoice = () => {
     const userInput = prompt(`What is your choice: ${ROCK}, ${PAPER} or ${SCISSORS}`, "").toUpperCase();
 
     const isChoiceCorrect = {
-        correct: function () {
+        correct: () => {
             alert(`${userInput} is selected!`);
             return userInput;
         },
-        wrong: function () {
+        wrong: () => {
             alert(`"${userInput}" is not a valid choice! ` + `"${DEFAULT_SELECTION}" is selected by default!`);
             return DEFAULT_SELECTION;
         }
@@ -30,7 +30,7 @@ const getPlayerChoice = function () {
     return userChoice ? isChoiceCorrect.correct() : isChoiceCorrect.wrong();
 }
 
-const getComputerChoice = function () {
+const getComputerChoice = () => {
     const rndNumber = Math.random();
 
     if (rndNumber < 0.34) {
@@ -50,7 +50,7 @@ const determineWinner = (playerChoice, computerChoice) => {
 }
 
 
-startGameBtn.addEventListener(`click`, function () {
+startGameBtn.addEventListener(`click`, () => {
     if (isGameRunning) {
         alert(`Game is already running!`);
         return;
