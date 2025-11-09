@@ -33,13 +33,7 @@ const getPlayerChoice = () => {
 const getComputerChoice = () => {
     const rndNumber = Math.random();
 
-    if (rndNumber < 0.34) {
-        return ROCK;
-    } else if (rndNumber < 0.67) {
-        return PAPER;
-    } else {
-        return SCISSORS;
-    }
+    return rndNumber < 0.34 ? ROCK : rndNumber < 0.67 ? PAPER : SCISSORS;
 }
 
 const determineWinner = (playerChoice, computerChoice) => {
