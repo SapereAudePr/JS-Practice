@@ -1,30 +1,25 @@
 const startGameBtn = document.getElementById('start-game-btn');
 
-const testGreetBtn = document.getElementById(`test-greet-btn`);
+const ROCK = "ROCK";
+const PAPER = "PAPER";
+const SCISSORS = "SCISSORS";
+const DEFAULT_SELECTION = ROCK;
 
-const testEndBtn = document.getElementById(`test-end-btn`);
-
-function startGame() {
-    alert(`Game starting!`);
-    console.log(alert);
-}
-
-const testFnc = {
-    greet: function(){
-        alert(`Greeting`);
-        console.log(`Greeting!`);
-    },
-    end: function(){
-        alert(`Ending!`);
-        console.log(`Ending!`);
+const getPlayerChoice = function () {
+    const selection = prompt(`What is your choice: ${ROCK}, ${PAPER} or ${SCISSORS}`, "").toUpperCase();
+    if (selection !== ROCK &&
+        selection !== PAPER &&
+        selection !== SCISSORS) {
+        alert(`Invalid choice, ${DEFAULT_SELECTION} is selected for default!`);
+        return DEFAULT_SELECTION;
+    } else {
+        alert(`${selection} is selected!`);
     }
+    return selection;
 }
 
-
-
-startGameBtn.addEventListener('click', startGame);
-testGreetBtn.addEventListener('click', function (){
-    alert(`Greeting!`);
-    console.log(`Greeting!`);
+startGameBtn.addEventListener(`click`, function () {
+    console.log("Starting game...");
+    const playerSelection = getPlayerChoice();
+    console.log(playerSelection);
 });
-testEndBtn.addEventListener('click', testFnc.end);
