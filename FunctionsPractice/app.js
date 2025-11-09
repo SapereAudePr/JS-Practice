@@ -13,7 +13,7 @@ const getPlayerChoice = function () {
     if (SELECTION_OPTIONS.includes(userInput)) {
         alert(`${userInput} is selected!`);
     } else {
-        alert(`Invalid input: ${userInput}! //` + `${DEFAULT_SELECTION} is selected by default!`);
+        alert(`"${userInput}" is not a valid choice!   ` + `"${DEFAULT_SELECTION}" is selected by default!`);
         return DEFAULT_SELECTION;
     }
     return userInput;
