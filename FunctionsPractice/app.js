@@ -1,3 +1,4 @@
+`use strict`;
 const startGameBtn = document.getElementById('start-game-btn');
 
 const ROCK = "ROCK";
@@ -33,7 +34,7 @@ const getPlayerChoice = () => {
 const getComputerChoice = () => {
     const rndNumber = Math.random();
 
-    return rndNumber < 0.34 ? ROCK : rndNumber < 0.67 ? PAPER : SCISSORS;
+    return rndNumber < 1 / 3 ? ROCK : rndNumber < 2 / 3 ? PAPER : SCISSORS;
 }
 
 const determineWinner = (playerChoice, computerChoice) => {
@@ -42,7 +43,6 @@ const determineWinner = (playerChoice, computerChoice) => {
             RESULT_PLAYER_WIN :
             RESULT_COMPUTER_WIN;
 }
-
 
 startGameBtn.addEventListener(`click`, () => {
     if (isGameRunning) {
@@ -57,4 +57,5 @@ startGameBtn.addEventListener(`click`, () => {
     console.log(`Computer's selection:  ${computerSelection}`);
     const winner = determineWinner(playerSelection, computerSelection);
     console.log(winner);
+    isGameRunning = false;
 });
