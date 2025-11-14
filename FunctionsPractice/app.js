@@ -59,3 +59,35 @@ startGameBtn.addEventListener(`click`, () => {
     console.log(winner);
     isGameRunning = false;
 });
+
+
+const sayHello = (name) => console.log('Hi ' + name);
+sayHello('Alice');
+
+const sayHelloTwo = (phrase, name) => {
+    phrase = 'Hi';
+    name = 'Bob';
+    console.log(phrase + ', ' + name);
+}
+sayHelloTwo();
+
+const sayHelloThree = (name) => `Hi ${name}`;
+
+console.log(sayHelloThree(`Charlie`));
+
+function checkInput (cb, ...strings) {
+    let hasEmptyText = false;
+    for (const text of strings) {
+        if (!text) {
+            hasEmptyText = true;
+            break;
+        }
+    }
+    if (!hasEmptyText) {
+        cb();
+    }
+}
+
+checkInput(() => {
+    console.log("All not empty!");
+}, `21`, `125`, `646`, `125`, ``);
