@@ -1,15 +1,16 @@
-const modalActions = document.querySelector('.modal__actions');
-
 const deleteModal = document.querySelector('#delete-modal');
 
-const modalActionCancelBtn = modalActions.querySelector('.btn--passive');
-const modalActionAddBtn = modalActions.querySelector('.btn--success');
+const modalActionNoBtn = document.querySelector('#no-cancel-btn');
+const modalActionYesBtn = document.querySelector('.btn--danger');
+
+const modalActionCancelBtn = document.querySelector('.btn--passive');
+const modalActionAddBtn = document.querySelector('.btn--success');
 
 const addModal = document.getElementById('add-modal');
 
 const startAddBtn = document.querySelector('header button');
 
-const backDrop = document.body.firstElementChild;
+const backDrop = document.getElementById('backdrop');
 
 const userInputs = addModal.querySelectorAll('input');
 
@@ -21,6 +22,7 @@ const movieList = document.querySelector('#movie-list');
 
 const updateUI = () => section.classList.toggle(`invisible`, movies.length > 0);
 
+let movieIDToDelete;
 
 const deleteMovie = movieID => {
     let movieIndex = 0;
@@ -33,13 +35,16 @@ const deleteMovie = movieID => {
     movies.splice(movieIndex, 1);
     console.log(movieIndex, movieList.children[movieIndex]);
     movieList.children[movieIndex].remove();
-    deleteModal.classList.remove(`visible`);
 }
 
-const deleteMovieHandler = (movieID) => {
+const closeDeleteModal = () => {
+    deleteModal.classList.remove('visible');
+}
+
+const showMovieDeleteModal = (movieID) => {
+    movieIDToDelete = movieID;
     deleteModal.classList.add('visible');
     backDrop.classList.toggle('visible');
-    // deleteMovie(movieID);
 }
 
 const renderMovieList = (id, title, imageUrl, rating) => {
@@ -48,18 +53,20 @@ const renderMovieList = (id, title, imageUrl, rating) => {
     newMovieListElement.innerHTML = `
     <div class="movie-element__image" > <img src="${imageUrl}" alt="${title}"></div>
     <div class="movie-element__info" > <h2>${title}</h2> <p>${rating}/5</p>  </div>`;
-    newMovieListElement.addEventListener('click', deleteMovieHandler.bind(null, id));
+    newMovieListElement.addEventListener('click', showMovieDeleteModal.bind(null, id));
     movieList.append(newMovieListElement);
 }
 
 
 const toggleBackDrop = () => {
     backDrop.classList.toggle('visible');
+
 }
 
 const closeMovieModal = () => {
     addModal.classList.remove('visible');
     backDrop.classList.remove('visible');
+    clearMovieInputs();
 }
 
 const showMovieModal = () => {
@@ -67,7 +74,7 @@ const showMovieModal = () => {
     toggleBackDrop();
 }
 
-const toggleCancelModalHandler = () => {
+const backdropClickHandler = () => {
     closeMovieModal();
     clearMovieInputs();
     toggleBackDrop();
@@ -106,6 +113,15 @@ const clearMovieInputs = () => {
 }
 
 startAddBtn.addEventListener('click', showMovieModal);
-backDrop.addEventListener('click', toggleCancelModalHandler);
-modalActionCancelBtn.addEventListener('click', toggleCancelModalHandler);
+backDrop.addEventListener('click', backdropClickHandler);
+modalActionCancelBtn.addEventListener('click', closeMovieModal);
 modalActionAddBtn.addEventListener(`click`, addMovieHandler)
+modalActionNoBtn.addEventListener(`click`, () => {
+    closeDeleteModal();
+    toggleBackDrop();
+});
+modalActionYesBtn.addEventListener(`click`, () => {
+    deleteMovie(movieIDToDelete);
+    closeDeleteModal();
+    toggleBackDrop();
+})
