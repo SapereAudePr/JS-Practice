@@ -33,11 +33,12 @@ const deleteMovie = movieID => {
     movies.splice(movieIndex, 1);
     console.log(movieIndex, movieList.children[movieIndex]);
     movieList.children[movieIndex].remove();
+    deleteModal.classList.remove(`visible`);
 }
 
 const deleteMovieHandler = (movieID) => {
-    deleteModal.classList.toggle('visible');
-
+    deleteModal.classList.add('visible');
+    backDrop.classList.toggle('visible');
     // deleteMovie(movieID);
 }
 
@@ -56,14 +57,20 @@ const toggleBackDrop = () => {
     backDrop.classList.toggle('visible');
 }
 
-const toggleMovieModal = () => {
-    addModal.classList.toggle('visible');
+const closeMovieModal = () => {
+    addModal.classList.remove('visible');
+    backDrop.classList.remove('visible');
+}
+
+const showMovieModal = () => {
+    addModal.classList.add('visible');
     toggleBackDrop();
-    clearMovieInputs();
 }
 
 const toggleCancelModalHandler = () => {
-    toggleMovieModal();
+    closeMovieModal();
+    clearMovieInputs();
+    toggleBackDrop();
 }
 
 const addMovieHandler = () => {
@@ -86,7 +93,8 @@ const addMovieHandler = () => {
     movies.push(newMovie);
     console.log(movies);
     console.log(newMovie);
-    toggleMovieModal();
+    closeMovieModal();
+    clearMovieInputs();
     updateUI();
     renderMovieList(newMovie.newID, newMovie.title, newMovie.imageUrl, newMovie.rating);
 }
@@ -97,7 +105,7 @@ const clearMovieInputs = () => {
     }
 }
 
-startAddBtn.addEventListener('click', toggleMovieModal);
+startAddBtn.addEventListener('click', showMovieModal);
 backDrop.addEventListener('click', toggleCancelModalHandler);
 modalActionCancelBtn.addEventListener('click', toggleCancelModalHandler);
 modalActionAddBtn.addEventListener(`click`, addMovieHandler)
