@@ -35,6 +35,7 @@ const deleteMovie = movieID => {
     movies.splice(movieIndex, 1);
     console.log(movieIndex, movieList.children[movieIndex]);
     movieList.children[movieIndex].remove();
+    updateUI();
 }
 
 const closeDeleteModal = () => {
