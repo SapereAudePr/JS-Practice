@@ -36,6 +36,8 @@ const deleteMovie = movieID => {
 }
 
 const deleteMovieHandler = (movieID) => {
+    deleteModal.classList.toggle('visible');
+
     // deleteMovie(movieID);
 }
 
