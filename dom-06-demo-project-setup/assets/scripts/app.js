@@ -1,5 +1,7 @@
 const modalActions = document.querySelector('.modal__actions');
 
+const deleteModal = document.querySelector('#delete-modal');
+
 const modalActionCancelBtn = modalActions.querySelector('.btn--passive');
 const modalActionAddBtn = modalActions.querySelector('.btn--success');
 
@@ -20,17 +22,21 @@ const movieList = document.querySelector('#movie-list');
 const updateUI = () => section.classList.toggle(`invisible`, movies.length > 0);
 
 
-const deleteMovieHandler = (movieID) => {
+const deleteMovie = movieID => {
     let movieIndex = 0;
     for (const movie of movies) {
         if (movie.newID === movieID) {
-                break;
+            break;
         }
         movieIndex++;
     }
     movies.splice(movieIndex, 1);
     console.log(movieIndex, movieList.children[movieIndex]);
     movieList.children[movieIndex].remove();
+}
+
+const deleteMovieHandler = (movieID) => {
+    // deleteMovie(movieID);
 }
 
 const renderMovieList = (id, title, imageUrl, rating) => {
