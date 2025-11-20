@@ -22,6 +22,28 @@ let movieElementToDelete = null;
 let movieIDtoDelete = null;
 
 
+const renderAddedMovies = (id, title, imageUrl, rating) => {
+    const createMovieElement = document.createElement("li");
+    createMovieElement.className = "movie-element";
+    createMovieElement.innerHTML = `
+    <div class="movie-element__image" ><img src="${imageUrl}" alt="${title}"></div>
+    <div class="movie-element__info"> <h2>${title}</h2>  <p>${rating}/5</p> </div>
+    <div><button type="button" > DELETE</button> </div>
+    `;
+
+    const deleteButtons = createMovieElement.querySelector(`button`);
+    deleteButtons.addEventListener("click", () => {
+        movieElementToDelete = createMovieElement;
+        movieIDtoDelete = id;
+        console.log(`Movie ID:  ${id}`);
+        showDeleteMovieModal();
+    });
+
+
+    movieList.append(createMovieElement);
+    console.log(movies);
+}
+
 const addMovieHandler = () => {
     const idNum = Math.random().toString();
     const titleValue = modalContentInputs[0].value;
@@ -40,28 +62,13 @@ const addMovieHandler = () => {
         ratingValue: ratingValue,
     };
 
-    const createMovieElement = document.createElement("li");
+    renderAddedMovies(idNum, titleValue, imageUrlValue, ratingValue);
 
-    createMovieElement.className = "movie-element";
-    createMovieElement.innerHTML = `
-    <div class="movie-element__image" ><img src="${movieInputValues.imageUrl}" alt="${movieInputValues.title}"></div>
-    <div class="movie-element__info"> <h2>${movieInputValues.title}</h2>  <p>${movieInputValues.ratingValue}/5</p> </div>
-    <div><button type="button" > DELETE</button> </div>
-    `;
-
-    const findDeleteButtons = createMovieElement.querySelector(`button`);
-    findDeleteButtons.addEventListener("click", () => {
-        movieElementToDelete = createMovieElement;
-        movieIDtoDelete = movieInputValues.id;
-        console.log(`Movie ID:  ${movieInputValues.id}`);
-        showDeleteMovieModal();
-    });
-
-    movieList.append(createMovieElement);
     movies.push(movieInputValues);
     console.log(movieInputValues);
     console.log(movies);
 }
+
 
 const deleteMovieHandler = () => {
     movieElementToDelete.remove();
@@ -79,16 +86,6 @@ const deleteMovieHandler = () => {
     updateUI();
 }
 
-
-const showDeleteMovieModal = () => {
-    deleteMovieModalDiv.classList.add("visible");
-    showBackdropDiv();
-}
-
-const hideDeleteMovieModal = () => {
-    deleteMovieModalDiv.classList.remove("visible");
-    hideBackdropDiv();
-}
 
 const clearUserInputs = () => {
     for (const input of modalContentInputs) {
@@ -141,6 +138,16 @@ const showAddMovieModal = () => {
 
 const hideAddMovieModal = () => {
     addModalDiv.classList.remove("visible");
+}
+
+const showDeleteMovieModal = () => {
+    deleteMovieModalDiv.classList.add("visible");
+    showBackdropDiv();
+}
+
+const hideDeleteMovieModal = () => {
+    deleteMovieModalDiv.classList.remove("visible");
+    hideBackdropDiv();
 }
 
 
