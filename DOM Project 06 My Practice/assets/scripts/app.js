@@ -12,9 +12,15 @@ const entryTextSection = document.getElementById("entry-text");
 
 const movieList = document.getElementById(`movie-list`);
 
+
+const deleteMovieModal = document.getElementById("delete-modal");
+
+
 const movies = [];
 
-const userInputsHandler = () => {
+
+const addMovieHandler = () => {
+    const idNum = Math.random().toString();
     const titleValue = modalContentInputs[0].value;
     const imageUrlValue = modalContentInputs[1].value;
     const ratingValue = modalContentInputs[2].value;
@@ -25,13 +31,41 @@ const userInputsHandler = () => {
     }
 
     const movieInputValues = {
+        id: idNum,
         title: titleValue,
         imageUrl: imageUrlValue,
         ratingValue: ratingValue,
     };
 
+    const createMovieElement = document.createElement("li");
+
+    createMovieElement.className = "movie-element";
+    createMovieElement.innerHTML = `
+    <div class="movie-element__image" ><img src="${movieInputValues.imageUrl}" alt="${movieInputValues.title}"></div>
+    <div class="movie-element__info"> <h2>${movieInputValues.title}</h2>  <p>${movieInputValues.ratingValue}/5</p> </div>
+    <div><button type="button" > DELETE</button> </div>
+    `;
+
+    const findDeleteButtons = createMovieElement.querySelector(`button`);
+    findDeleteButtons.addEventListener("click", () => {
+        console.log(`Movie ID:  ${movieInputValues.id}`);
+        showDeleteMovieModal();
+    });
+
+    movieList.append(createMovieElement);
     movies.push(movieInputValues);
+    console.log(movieInputValues);
     console.log(movies);
+}
+
+
+const showDeleteMovieModal = () => {
+    deleteMovieModal.classList.add("visible");
+    showBackdropDiv();
+}
+
+const hideDeleteMovieModal = () => {
+    deleteMovieModal.classList.remove("visible");
 }
 
 const clearUserInputs = () => {
@@ -47,16 +81,11 @@ const updateUI = () => {
 }
 
 
-
-
-
-
-
-
 const addMovieSuccessHandler = () => {
-    userInputsHandler();
+    addMovieHandler();
     hideBackdropDiv();
     hideAddMovieModal();
+    clearUserInputs();
     updateUI();
 }
 
@@ -69,6 +98,7 @@ const addMovieCancelHandler = () => {
 const toggleBackdropDiv = () => {
     backDropDiv.classList.toggle("visible");
     hideAddMovieModal();
+    hideDeleteMovieModal();
     clearUserInputs();
 }
 
@@ -99,6 +129,7 @@ addMovieSuccessBtn.addEventListener("click", () => {
 addMovieCancelBtn.addEventListener("click", () => {
     addMovieCancelHandler();
 });
+
 backDropDiv.addEventListener("click", () => {
     toggleBackdropDiv();
 });

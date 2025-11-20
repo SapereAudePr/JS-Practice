@@ -159,6 +159,10 @@ input:focus {
 
 .movie-element h2 {
     color: #383838;
+    font-size: 2.25rem;
+    font-family: "Noto Sans JP", sans-serif;
+    padding-top: 1rem;
+    margin-left: 2.2rem;
     margin-bottom: 1rem;
 }
 
@@ -166,7 +170,9 @@ input:focus {
     color: white;
     display: inline;
     background: #f67722;
-    padding: 0.25rem 1rem;
+    position: absolute;
+    padding: 0.25rem 2rem;
+    margin-left: 2rem;
     border-radius: 15px;
 }
 
