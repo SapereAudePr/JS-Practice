@@ -79,7 +79,6 @@
 
 
 
-
 const prices = [10.77, 20.11, 50.99, 5.54];
 const tax = 0.20;
 const taxAdjustedPrices = [];
@@ -88,8 +87,8 @@ const taxAdjustedPrices = [];
 //     taxAdjustedPrices.push(price * (1 + tax));
 // }
 
-prices.forEach((price, idx, result) => {
-    const resultObj = {index: idx, value: price * (1 + 0.20), beforeTax: `${price}`};
+prices.forEach((price, idx) => {
+    const resultObj = {beforeTax: price, afterTax: Number(price * (1 + tax)).toFixed(2), index: idx, taxAmount: tax};
     taxAdjustedPrices.push(resultObj);
 });
 
