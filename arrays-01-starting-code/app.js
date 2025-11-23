@@ -78,34 +78,207 @@
 // console.log(isInclude, isInclude2, indexOf);
 
 
-const prices = [10.77, 20.11, 50.99, 5.54];
-const prices2 = [10.77, 20.11, 50.99, 5.54];
-const tax = Math.random();
-const taxAdjustedPrices = [];
-const taxAdjustedPrices2 = [];
-let idx = 0;
+// const prices = [10.77, 20.11, 50.99, 5.54];
+// const prices2 = [10.77, 20.11, 50.99, 5.54];
+// const tax = Math.random();
+// const taxAdjustedPrices = [];
+// const taxAdjustedPrices2 = [];
+// let idx = 0;
+//
+// for (const price of prices) {
+//     const calculation = {
+//         index: idx,
+//         price: price,
+//         tax: tax,
+//         taxedPrice: price * (1 + tax)
+//     }
+//     idx++;
+//     taxAdjustedPrices.push(calculation);
+// }
+//
+// prices2.forEach((price, idx) => {
+//     const resultObj = {
+//         index: idx,
+//         price: price,
+//         tax: tax,
+//         taxedPrice: price * (1 + tax)
+//     }
+//     taxAdjustedPrices2.push(resultObj);
+// });
+//
+//
+// console.log(taxAdjustedPrices);
+// console.log(taxAdjustedPrices2);
 
-for (const price of prices) {
-    const calculation = {
-        index: idx,
-        price: price,
-        tax: tax,
-        taxedPrice: price * (1 + tax)
-    }
-    idx++;
-    taxAdjustedPrices.push(calculation);
-}
 
-prices2.forEach((price, idx) => {
-    const resultObj = {
-        index: idx,
-        price: price,
-        tax: tax,
-        taxedPrice: price * (1 + tax)
-    }
-    taxAdjustedPrices2.push(resultObj);
-});
+// const prices = [10.77, 20.11, 50.99, 5.54];
+// const tax = Math.random();
+//
+// const taxedPrices = prices.map((price, idx) => {
+//     return {
+//         index: idx,
+//         price: price,
+//         tax: tax,
+//         taxedPrice: price * (1 + tax)
+//     };
+// });
+//
+// console.log(prices ,taxedPrices);
+
+//
+// function transformToObjects (numberArray) {
+//     return numberArray.map(number => {
+//         return {val: number};
+//     })
+// }
+//
+// console.log(transformToObjects([1,2,3]));
 
 
-console.log(taxAdjustedPrices);
-console.log(taxAdjustedPrices2);
+// const sortIt = prices.sort((a, b) => {
+//     if (a > b) return 1;
+//     else if (b > b) return -1;
+//     else return -1;
+// });
+//
+// console.log(sortIt);
+// console.log(sortIt.reverse());
+
+
+//
+// const filterIt = prices.filter(price => price > 10);
+
+// console.log(filterIt);
+
+
+// const summing = () => {
+//     for (const price of prices) {
+//         sum += price;
+//     }
+//     return sum;
+// }
+// console.log(summing(prices));
+
+// let sum = 0;
+//
+//
+// prices.forEach(price => sum += price)
+//
+//
+// console.log(sum.toFixed(2));
+
+
+// const sum = prices.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+//
+// const sum2 = prices.reduce((prev, current) => {
+//     return prev + current;
+// })
+//
+//
+// console.log(sum.toFixed(2));
+// console.log(sum2.toFixed(2));
+
+
+
+//////////////////////////////////////////////////////// USE CASE OF MAP AND REDUCE METHODS ////////////////////////////////////////////////////////////
+
+// const originalArray = [{price: 10.99}, {price: 20.11}, {price: 30.99}, {price: 50.99}];
+//
+// const transformedArray = originalArray.map((obj) => {
+//     return obj.price;
+// });
+//
+// const sum = transformedArray.reduce((prevValue, currentValue) => {
+//     return prevValue + currentValue;
+// });
+//
+// console.log(sum);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// const prices = [10.77, 20.11, 50.99, 5.54];
+//
+// const mappedPrices = prices.map((nums) => {
+//    return {values: nums};
+// });
+//
+// const arr = [{values: 211.88}, {values: 671.88}, {values: 378.88}, {values: 985.99}, {values: 767.99}];
+//
+// const arr2 = arr.concat(mappedPrices);
+//
+// const mappedArr = arr2.map((val) => {
+//     return val.values;
+// });
+//
+// console.log(mappedArr);
+//
+// const reducedArr = mappedArr.reduce((prevVal, currVal) => {
+//     return prevVal + currVal;
+// });
+//
+// console.log(reducedArr);
+//
+// const toLocale = prices.toLocaleString(`en-US`, {
+//     style: 'currency',
+//     currency: 'USD',
+// });
+//
+// console.log(toLocale);
+//
+
+
+
+// const arr5 =[{n:1}, {n:2}, {n:3}, {n:4}, {n:5}, {n:6}, {n:7}, {n:8}, {n:9}, {n:10}];
+// const arrCopy = [...arr5];
+// // arr5[0].n = 20;
+// console.log(arrCopy);
+// console.log(arr5);
+//
+// const arr1 = [1,2,3,4,5];
+// const arr2 = [10,9,8,7,6];
+//
+// const united = [...arr1, ...arr2.toSorted((a,b) => a - b), ...arr5.map(n => n.n)];
+//
+// console.log(...arr1, ...arr2);
+// console.log(united);
+
+
+
+
+
+
+///////////////////////////////////////////// USE CASE OF CONCAT AND SPREAD OPERATOR FOR COPYING ARRAYS ////////////////////////////////////////////////////////////
+
+// const arr5 =[{n:1}, {n:2}, {n:3}, {n:4}, {n:5}, {n:6}, {n:7}, {n:8}, {n:9}, {n:10}];
+// const arrCopy = [...arr5];
+// // arr5[0].n = 20;
+// console.log(arrCopy);
+// console.log(arr5);
+//
+// const arr1 = [1,2,3,4,5];
+// const arr2 = [10,9,8,7,6];
+//
+// const united = [...arr1, ...arr2.toSorted((a,b) => a - b), ...arr5.map(n => n.n)];
+//
+// console.log(...arr1, ...arr2);
+// console.log(united);
+
+
+
+// const arr =[{n:1}, {n:2}, {n:3}, {n:4}, {n:5}, {n:6}, {n:7}, {n:8}, {n:9}, {n:10}];
+// const arr2 =[{n:11}, {n:12}, {n:13}, {n:14}, {n:15}, {n:16}, {n:17}, {n:18}, {n:19}, {n:20}];
+// arr[0].n = 55;
+// const concat = arr.concat(arr2).map(num => num.n);
+// const spreadOp = [...arr].map(num => num.n);
+// const spreadOpV2 = [...arr, ...arr2].map(num => num.n);
+//
+// console.log(concat);
+// console.log(spreadOp);
+// console.log(spreadOpV2);
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+

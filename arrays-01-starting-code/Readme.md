@@ -1,0 +1,1 @@
+App.js will have the special methods for arrays. The script can be used as a reminder, notebook.
