@@ -78,18 +78,34 @@
 // console.log(isInclude, isInclude2, indexOf);
 
 
-
 const prices = [10.77, 20.11, 50.99, 5.54];
-const tax = 0.20;
+const prices2 = [10.77, 20.11, 50.99, 5.54];
+const tax = Math.random();
 const taxAdjustedPrices = [];
+const taxAdjustedPrices2 = [];
+let idx = 0;
 
-// for (const price of prices) {
-//     taxAdjustedPrices.push(price * (1 + tax));
-// }
+for (const price of prices) {
+    const calculation = {
+        index: idx,
+        price: price,
+        tax: tax,
+        taxedPrice: price * (1 + tax)
+    }
+    idx++;
+    taxAdjustedPrices.push(calculation);
+}
 
-prices.forEach((price, idx) => {
-    const resultObj = {beforeTax: price, afterTax: Number(price * (1 + tax)).toFixed(2), index: idx, taxAmount: tax};
-    taxAdjustedPrices.push(resultObj);
+prices2.forEach((price, idx) => {
+    const resultObj = {
+        index: idx,
+        price: price,
+        tax: tax,
+        taxedPrice: price * (1 + tax)
+    }
+    taxAdjustedPrices2.push(resultObj);
 });
 
+
 console.log(taxAdjustedPrices);
+console.log(taxAdjustedPrices2);
