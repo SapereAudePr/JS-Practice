@@ -179,7 +179,6 @@
 // console.log(sum2.toFixed(2));
 
 
-
 //////////////////////////////////////////////////////// USE CASE OF MAP AND REDUCE METHODS ////////////////////////////////////////////////////////////
 
 // const originalArray = [{price: 10.99}, {price: 20.11}, {price: 30.99}, {price: 50.99}];
@@ -228,7 +227,6 @@
 //
 
 
-
 // const arr5 =[{n:1}, {n:2}, {n:3}, {n:4}, {n:5}, {n:6}, {n:7}, {n:8}, {n:9}, {n:10}];
 // const arrCopy = [...arr5];
 // // arr5[0].n = 20;
@@ -242,10 +240,6 @@
 //
 // console.log(...arr1, ...arr2);
 // console.log(united);
-
-
-
-
 
 
 ///////////////////////////////////////////// USE CASE OF CONCAT AND SPREAD OPERATOR FOR COPYING ARRAYS ////////////////////////////////////////////////////////////
@@ -265,7 +259,6 @@
 // console.log(united);
 
 
-
 // const arr =[{n:1}, {n:2}, {n:3}, {n:4}, {n:5}, {n:6}, {n:7}, {n:8}, {n:9}, {n:10}];
 // const arr2 =[{n:11}, {n:12}, {n:13}, {n:14}, {n:15}, {n:16}, {n:17}, {n:18}, {n:19}, {n:20}];
 // arr[0].n = 55;
@@ -278,7 +271,155 @@
 // console.log(spreadOpV2);
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////// USE CASE OF FACTORIAL FUNCTIONS ////////////////////////////////////////////////////////////////////////////
+
+
+// const factorial = n => n <= 1 ? 1 : factorial(n - 1) * n;
+//
+// console.log(factorial(4));
+
+
+/*/
+1x2 = 2
+2x3 = 6
+6x4 = 24
+ */
+
+// const factorialLoop = n => {
+//     let result = 1;
+//     for (let i = 1; i <= n; i++) {
+//         result *= i
+//     }
+//     return result;
+// }
+//
+// console.log(factorialLoop(5));
+
+
+// function factorial2(n) {
+//     console.log("call factorial(", n, ")");
+//
+//     if (n <= 1) {
+//         console.log("↳ n <= 1, return 1");
+//         return 1;
+//     } else {
+//         console.log("↳ need factorial(", n - 1, ") first");
+//         const smallerResult = factorial2(n - 1);
+//         console.log("↳ got factorial(", n - 1, ") =", smallerResult);
+//         const result = smallerResult * n;
+//         console.log("↳ return", smallerResult, "*", n, "=", result);
+//         return result;
+//     }
+// }
+//
+// console.log("FINAL:", factorial2(6));
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+///////////////////////////////////////////// LITTLE PRACTICE ////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// const multiDimensionalArr = [
+//     [1,2,3],
+//     [4,5,6],
+//     [7,8,9],
+// ];
+//
+// const selectIdx = multiDimensionalArr[2][1].valueOf(); // 8
+// const selectIdx2 = multiDimensionalArr[2][1] = 20 // 20
+// console.log(selectIdx);
+// console.log(selectIdx2);
+//
+// const originalArray= [{val: 20}, {val: 30}, {val: 700}, {val: 60}, {val: 90}, {val: 100}, {val: 1000}, {val: 2000}];
+//
+// const mappedArr = originalArray.map(value => value.val);
+//
+// const reduce = originalArray.reduce((sumVal, currentVal) => sumVal + currentVal.val, 0);
+//
+// const united = originalArray.map(value => value.val).reduce((sumVal, currentVal) => sumVal + currentVal, 0); // Single line MAP and REDUCE FN Usage
+//
+// console.log(reduce);
+// console.log(mappedArr);
+// console.log(originalArray);
+// console.log(united);
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////// USE CASE OF SPLIT AND JOIN //////////////////////////////////////////////////////////////////////////////////
+
+
+// const data = `333.33;99.99;2025`;
+//
+// const split = data.split(';'); // Only split // Split does extract one single element and multiply it // Split only works with strings
+//
+// split[2] = +split[2]; // Convert the specific index to Number
+//
+// const transformedData = data.split(`;`).map(Number); // Split and convert all items to Number
+//
+// console.log(data);
+// console.log(split);
+// console.log(transformedData);
+//
+// const nameFragments = [`I`, `Love`, `JS`];
+//
+// const join = nameFragments.join(`--  `); // Join adds the separator input between each element // Join only works with Arrays!
+// console.log(join);
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////// USE CASE OF SPREAD OPERATOR //////////////////////////////////////////////////////////////////////////////////
+
+
+// const arr = [85, 19, 75, 32];
+//
+// const copyArr = [...arr];
+//
+// console.log(Math.min(arr)); // This will throw NaN
+// console.log(Math.min(copyArr)); // This will throw NaN
+// console.log(Math.min(...arr)); // But this will work
+// console.log(Math.max(...arr)); // But this will work
+//
+// console.log(arr ,copyArr);
+
+
+// const valArr = [{name: `Raven`, age: 20}, {name: `John`, age: 30}, {name: `January`, age: 40}];
+// const copyValArr = [...valArr]; // This creates a shallow copy of the array and create a unique object (different reference) with it's current elements, objects (snapshot at the time)
+// valArr.push({name: `Ocean`, age: 180}); // copyValArr won't be affected because both arrays are different (different references)
+// valArr[0].name = 'Mr.Bean'; // This modifies a property of the shared object, so both arrays reflect the change || The array elements in valArr and copyValArr hold the same object references.
+//
+// console.log(valArr, copyValArr);
+
+
+// const valArr = [{name: `Raven`, age: 20}, {name: `John`, age: 30}, {name: `January`, age: 40}];
+// const copyValArr = [...valArr];
+//
+// valArr.push({name: `Ocean`, age: 90});
+//
+// console.log(valArr, copyValArr);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////// USE CASE OF ARRAY DESTRUCTURING //////////////////////////////////////////////////////////////////////////////////
+
+// const data = [`Jn`, `Ahx`, `Kel`, `Syn`, `Xn`, `Yn`, 50, 70, {name: `Raven`}, [999.99]];
+//
+// const [First, Second, Third, ...restOfThem] = data;
+//
+// console.log(First, Second, Third, restOfThem);
+//
+// const data2 = [`Jn`, `Ahx`, `Kel`, `Syn`, `Xn`, `Yn`, 50, 70, {name: `Raven`}, [999.99]];
+//
+// const [...allOfThem] = data2;
+//
+// console.log(allOfThem);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
