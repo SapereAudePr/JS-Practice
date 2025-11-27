@@ -11,25 +11,29 @@
   <body>
     <section id="user-input" class="card">
       <div class="control">
-        <label for="title">Favorite Movie</label>
+        <label for="title">Movie Name</label>
         <input type="text" id="title" />
       </div>
       <div class="inline-controls">
         <div class="control">
-          <label for="extra-name">Extra Information (Name)</label>
-          <input type="text" id="extra-name" />
+          <label for="genre">Genre</label>
+          <input type="text" id="genre" />
         </div>
         <div class="control">
-          <label for="extra-value">Extra Information (Value)</label>
-          <input type="text" id="extra-value" />
+          <label for="comment">Your Comment</label>
+          <input type="text" id="comment" />
         </div>
+          <div class="control">
+              <label for="point">Your Point</label>
+              <input type="text" id="point" />
+          </div>
       </div>
       <button id="add-movie-btn">Add Movie</button>
     </section>
     <section id="filter" class="card">
       <label for="filter-title">Filter by Title</label>
       <input type="text" id="filter-title" />
-      <button id="search-btn">Search</button>
+      <button id="search-movie-btn">Search</button>
     </section>
     <ul id="movie-list" class="card"></ul>
   </body>
