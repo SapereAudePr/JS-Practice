@@ -101,15 +101,15 @@ GOOD FOR UNIQUE VALUES LIKE IDS
 
 /////////////////////// WEAK MAP /////////////////////////
 
-const personData = new WeakMap();
-
-let person = {name: `Raven`};
-
-personData.set(person, `Extra Info!`);
-
-person = null; // Person object will be garbage collected from the JS engine.
-
-console.log(personData);
+// const personData = new WeakMap();
+//
+// let person = {name: `Raven`};
+//
+// personData.set(person, `Extra Info!`);
+//
+// person = null; // Person object will be garbage collected from the JS engine.
+//
+// console.log(personData);
 
 //////////////////////////////////////////////////////////
 
