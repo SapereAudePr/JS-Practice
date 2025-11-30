@@ -1,17 +1,21 @@
+class Product {
+    title;
+    imageUrl;
+    price;
+    description;
+
+    constructor(title, image, price, desc) {
+        this.title = title;
+        this.imageUrl = image;
+        this.price = price;
+        this.description = desc;
+    }
+}
+
 const productList = {
     products: [
-        {
-            title: 'Forest',
-            imageUrl: `https://greggvanourek.com/wp-content/uploads/2023/08/Nature-path-by-water-trees-and-mountains-AdobeStock_291242770-scaled.jpeg`,
-            price: 2000,
-            description: `Forest ready to be make hotels`
-        },
-        {
-            title: 'Scene',
-            imageUrl: `https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?cs=srgb&dl=pexels-souvenirpixels-417074.jpg&fm=jpg`,
-            price: 6000,
-            description: `Nature ready to be make hotels`
-        },
+        new Product('Forest', `https://greggvanourek.com/wp-content/uploads/2023/08/Nature-path-by-water-trees-and-mountains-AdobeStock_291242770-scaled.jpeg`, 2000, `Nature Path by water and trees`),
+        new Product(`Scene`, `https://greggvanourek.com/wp-content/uploads/2023/08/Nature-path-by-water-trees-and-mountains-AdobeStock_291242770-scaled.jpeg`, 6000, `Beautiful lake around the mountains`),
     ],
     render() {
         const renderHook = document.getElementById(`app`);
