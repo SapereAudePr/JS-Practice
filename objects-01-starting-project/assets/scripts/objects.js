@@ -22,10 +22,10 @@ const renderMovies = (filterTerm = ``) => {
     filteredMovies.forEach(movie => {
         const createList = document.createElement("li");
         createList.innerHTML = `
-            <div style="color: blue">Title: ${movie.formatTitle()}</div>
+            <div style="color: blue">Title: ${movie.format(`title`)}</div>
             <div style="color: #f3cc4b">Genre: ${movie.genre}</div>
             <div style="color: greenyellow">Comment: ${movie.comment}</div>
-            <div>Point: ${movie.rating}</div>
+            <div>Rating: ${movie.format(`rating`)}</div>
             <div>ID: ${movie.id}</div>
         `;
         movieList.append(createList);
@@ -48,8 +48,11 @@ const addMovieHandler = () => {
         comment,
         rating,
         id: Math.random(),
-        formatTitle: function() {
-            return this.title.toUpperCase();
+        format(key) {
+            const val = this[key];
+            if (key === 'title') return String(val).toUpperCase();
+            if (key === 'rating') return `${val}/10`;
+            return String(val); // Default fallback for other keys(genre, comment etc.)
         }
     }
     movies.push(newMovie);
