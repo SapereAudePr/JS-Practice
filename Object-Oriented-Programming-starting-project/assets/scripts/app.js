@@ -15,8 +15,11 @@ class ElementAttribute {
 }
 
 class Component {
-    constructor(renderHookId) {
+    constructor(renderHookId, shouldRender = true) {
         this.hookId = renderHookId;
+        if (shouldRender) {
+            this.render();
+        }
     }
 
     render() {
@@ -48,16 +51,15 @@ class ShoppingCart extends Component {
     }
 
     get totalAmount() {
-        const sum = this.items.reduce(
+        return this.items.reduce(
             (prevValue, curItem) => prevValue + curItem.price,
             0
         );
-        return sum;
     }
 
     constructor(renderHookId) {
         super(renderHookId);
-        this.render();
+        // this.render();
     }
 
     addProduct(product) {
@@ -66,19 +68,25 @@ class ShoppingCart extends Component {
         this.cartItems = updatedItems;
     }
 
+    orderProducts() {
+        console.log(this.items)
+    }
+
     render() {
         const cartEl = this.createRootElement('section', 'cart');
         cartEl.innerHTML = `
       <h2>Total: \$${0}</h2>
       <button>Order Now!</button>
     `;
+        const orderBtn = cartEl.querySelector('button');
+        orderBtn.addEventListener('click', this.orderProducts.bind(this));
         this.totalOutput = cartEl.querySelector('h2');
     }
 }
 
 class ProductItem extends Component {
     constructor(product, renderHookId) {
-        super(renderHookId);
+        super(renderHookId, false);
         this.product = product;
         this.render();
     }
@@ -106,33 +114,43 @@ class ProductItem extends Component {
 }
 
 class ProductList extends Component {
-    products = [
-        new Product(
-            'A Pillow',
-            'https://greggvanourek.com/wp-content/uploads/2023/08/Nature-path-by-water-trees-and-mountains-AdobeStock_291242770-scaled.jpeg',
-            'A soft pillow!',
-            19.99
-        ),
-        new Product(
-            'A Carpet',
-            'https://www.allianz.com/en/mediacenter/news/reports/250703-nature-on-the-brink-why-a-thriving-planet-matters-for-us-all/_jcr_content/root/parsys/wrapper/wrapper/image_copy_copy.img.82.3360.jpeg/1751523991160/nature-on-the-brink-3b.jpeg',
-            'A carpet which you might like - or not.',
-            89.99
-        )
-    ];
+    products = [];
 
     constructor(renderHookId) {
         super(renderHookId);
-        this.render();
+        this.fetchProducts();
+    }
+
+    fetchProducts() {
+        this.products = [
+            new Product(
+                'A Pillow',
+                'https://greggvanourek.com/wp-content/uploads/2023/08/Nature-path-by-water-trees-and-mountains-AdobeStock_291242770-scaled.jpeg',
+                'A soft pillow!',
+                19.99
+            ),
+            new Product(
+                'A Carpet',
+                'https://www.allianz.com/en/mediacenter/news/reports/250703-nature-on-the-brink-why-a-thriving-planet-matters-for-us-all/_jcr_content/root/parsys/wrapper/wrapper/image_copy_copy.img.82.3360.jpeg/1751523991160/nature-on-the-brink-3b.jpeg',
+                'A carpet which you might like - or not.',
+                89.99
+            )
+        ];
+        this.renderProducts();
+    }
+
+    renderProducts() {
+        for (const prod of this.products) {
+            new ProductItem(prod, 'prod-list');
+        }
+
     }
 
     render() {
         this.createRootElement('ul', 'product-list', [
             new ElementAttribute('id', 'prod-list')
         ]);
-        for (const prod of this.products) {
-            new ProductItem(prod, 'prod-list');
-        }
+
     }
 }
 
