@@ -1,9 +1,9 @@
 class Product {
-    constructor(title, image, price, desc) {
+    constructor(title, image, desc, price) {
         this.title = title;
         this.imageUrl = image;
-        this.price = price;
         this.description = desc;
+        this.price = price;
     }
 }
 
@@ -17,10 +17,10 @@ class ElementAttribute {
 class Component {
     constructor(renderHookId) {
         this.hookId = renderHookId;
-        this.render();
     }
 
-    render() {}
+    render() {
+    }
 
     createRootElement(tag, cssClasses, attributes) {
         const rootElement = document.createElement(tag);
@@ -28,8 +28,8 @@ class Component {
             rootElement.className = cssClasses;
         }
         if (attributes && attributes.length > 0) {
-            for (const attribute of attributes) {
-                rootElement.setAttribute(attribute.name, attribute.value);
+            for (const attr of attributes) {
+                rootElement.setAttribute(attr.name, attr.value);
             }
         }
         document.getElementById(this.hookId).append(rootElement);
@@ -42,15 +42,22 @@ class ShoppingCart extends Component {
 
     set cartItems(value) {
         this.items = value;
-        this.totalOutput.innerHTML = `<h2>Total Amount: \$${this.totalAmount.toFixed(2)}</h2>`;
+        this.totalOutput.innerHTML = `<h2>Total: \$${this.totalAmount.toFixed(
+            2
+        )}</h2>`;
     }
 
     get totalAmount() {
-        return this.items.reduce((prevValue, curItem) => prevValue + curItem.price, 0);
+        const sum = this.items.reduce(
+            (prevValue, curItem) => prevValue + curItem.price,
+            0
+        );
+        return sum;
     }
 
     constructor(renderHookId) {
         super(renderHookId);
+        this.render();
     }
 
     addProduct(product) {
@@ -60,12 +67,12 @@ class ShoppingCart extends Component {
     }
 
     render() {
-        const cartEl = this.createRootElement(`section`, `cart`)
+        const cartEl = this.createRootElement('section', 'cart');
         cartEl.innerHTML = `
-        <h2>Total Amount: \$${0}</h2>
-        <button>Order Now!</button>
-        `;
-        this.totalOutput = cartEl.querySelector(`h2`);
+      <h2>Total: \$${0}</h2>
+      <button>Order Now!</button>
+    `;
+        this.totalOutput = cartEl.querySelector('h2');
     }
 }
 
@@ -73,6 +80,7 @@ class ProductItem extends Component {
     constructor(product, renderHookId) {
         super(renderHookId);
         this.product = product;
+        this.render();
     }
 
     addToCart() {
@@ -80,49 +88,64 @@ class ProductItem extends Component {
     }
 
     render() {
-        const prodEl = this.createRootElement(`li`, `product-item`);
+        const prodEl = this.createRootElement('li', 'product-item');
         prodEl.innerHTML = `
-                <div>
-                <img src="${this.product.imageUrl}" alt="${this.product.title}">
-                    <div class="product-item__content">
-                            <h2>${this.product.title}</h2>
-                            <h3>\$${this.product.price}</h3>
-                            <p>${this.product.description}</p>
-                            <button>Add to cart</button>
-                    </div>
-                </div>
-            `;
-        const addCartBtn = prodEl.querySelector('button');
-        addCartBtn.addEventListener('click', this.addToCart.bind(this));
+        <div>
+          <img src="${this.product.imageUrl}" alt="${this.product.title}" >
+          <div class="product-item__content">
+            <h2>${this.product.title}</h2>
+            <h3>\$${this.product.price}</h3>
+            <p>${this.product.description}</p>
+            <button>Add to Cart</button>
+          </div>
+        </div>
+      `;
+        const addCartButton = prodEl.querySelector('button');
+        addCartButton.addEventListener('click', this.addToCart.bind(this));
     }
 }
 
 class ProductList extends Component {
     products = [
-        new Product('Forest', `https://greggvanourek.com/wp-content/uploads/2023/08/Nature-path-by-water-trees-and-mountains-AdobeStock_291242770-scaled.jpeg`, 2000, `Nature Path by water and trees`),
-        new Product(`Scene`, `https://greggvanourek.com/wp-content/uploads/2023/08/Nature-path-by-water-trees-and-mountains-AdobeStock_291242770-scaled.jpeg`, 6000, `Beautiful lake around the mountains`),
+        new Product(
+            'A Pillow',
+            'https://greggvanourek.com/wp-content/uploads/2023/08/Nature-path-by-water-trees-and-mountains-AdobeStock_291242770-scaled.jpeg',
+            'A soft pillow!',
+            19.99
+        ),
+        new Product(
+            'A Carpet',
+            'https://www.allianz.com/en/mediacenter/news/reports/250703-nature-on-the-brink-why-a-thriving-planet-matters-for-us-all/_jcr_content/root/parsys/wrapper/wrapper/image_copy_copy.img.82.3360.jpeg/1751523991160/nature-on-the-brink-3b.jpeg',
+            'A carpet which you might like - or not.',
+            89.99
+        )
     ];
 
     constructor(renderHookId) {
         super(renderHookId);
+        this.render();
     }
 
     render() {
-        this.createRootElement(`ul`, `product-list`, [new ElementAttribute(`id`, `prod-list`)]);
+        this.createRootElement('ul', 'product-list', [
+            new ElementAttribute('id', 'prod-list')
+        ]);
         for (const prod of this.products) {
-            new ProductItem(prod, `prod-list`);
+            new ProductItem(prod, 'prod-list');
         }
     }
 }
 
-
 class Shop {
+    constructor() {
+        this.render();
+    }
+
     render() {
-        this.cart = new ShoppingCart(`app`);
-        new ProductList(`app`);
+        this.cart = new ShoppingCart('app');
+        new ProductList('app');
     }
 }
-
 
 class App {
     static cart;
@@ -138,4 +161,3 @@ class App {
 }
 
 App.init();
-
