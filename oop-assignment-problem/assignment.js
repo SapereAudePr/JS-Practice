@@ -1,4 +1,17 @@
 class Course {
+    #price;
+
+    get price() {
+        return `$${this.#price}`;
+    }
+
+    set price(value) {
+        if (value < 0) {
+            throw new Error(`Value must be a positive integer`);
+        }
+        this.#price = value;
+    }
+
     constructor(title, length, price) {
         this.title = title;
         this.length = length;
@@ -6,11 +19,11 @@ class Course {
     }
 
     calculate() {
-        return this.length / this.price;
+        return this.length / this.#price;
     }
 
     summary() {
-        return `Title: ${this.title} Length: ${this.length} Price: ${this.price}`;
+        console.log(`Title: ${this.title} Length: ${this.length} Price: ${this.price}`);
     }
 }
 
@@ -21,9 +34,9 @@ console.log(mathCourse);
 console.log(codeCourse);
 
 console.log(mathCourse.calculate(mathCourse), mathCourse.title);
-console.log(mathCourse.summary());
+mathCourse.summary();
 console.log(codeCourse.calculate(codeCourse), codeCourse.title);
-console.log(codeCourse.summary());
+mathCourse.summary();
 
 
 console.log(``)
@@ -35,23 +48,30 @@ console.log(`STEP 3`)
 console.log(``)
 
 class PracticalCourse extends Course {
-    numOfExercises = 60;
+    constructor(title, length, price, exerciseCount) {
+        super(title, length, price);
+        this.numOfExercises = exerciseCount;
+    }
+    summary() {
+        console.log(`Title: ${this.title} Length: ${this.length} Price: ${this.price} Exercises: ${this.numOfExercises}`);
+    }
 }
 
 class TheoreticalCourse extends Course {
     publish() {
-        console.log(`Publishing Course: ${this.title} ${this.numOfExercises + 1} `);
+        console.log(`Publishing Course: ${this.title}`);
     }
 }
 
-const practicalCourse = new PracticalCourse(`Math Course`, 2000, 60);
-console.log(practicalCourse);
+const practicalCourse = new PracticalCourse(`React Course`, 4000, 120, 40);
+practicalCourse.summary();
 const theoreticalCourse = new TheoreticalCourse(`Code Course`, 3120, 100);
 theoreticalCourse.publish();
 
 
+const set = new Course()
 
-
+// console.log(set.positive.symbol(mathCourse))
 
 // const minToHour = (a) => {
 //     return a / 60;
