@@ -70,5 +70,25 @@ class RenderProduct extends CreateProduct {
     }
 }
 
+class Cart extends RenderProduct{
+    constructor() {
+        super();
+    }
+
+    render() {
+        const cartEl = document.createElement('section');
+        cartEl.innerHTML = `
+        <div class="cart">
+        <div><h3>Items</h3><p>Total Amount</p></div>
+        </div>
+        `
+        const divApp = document.getElementById(`app`);
+        divApp.prepend(cartEl);
+    }
+}
+
 const renderProduct = new RenderProduct();
 renderProduct.render();
+
+const cart = new Cart();
+cart.render();
