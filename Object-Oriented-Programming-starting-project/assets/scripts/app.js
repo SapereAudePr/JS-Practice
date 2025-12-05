@@ -5,6 +5,18 @@ class Product {
         this.description = d;
         this.price = p;
     }
+
+    get price() {
+        return `$${this._price}`;
+    }
+
+    set price(price) {
+        if (price < 0) {
+            console.warn("Price should be greater than 0");
+            this._price = 0;
+        }
+        return this._price = price;
+    }
 }
 
 class CreateProduct extends Product {
