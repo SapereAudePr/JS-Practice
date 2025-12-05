@@ -26,10 +26,12 @@ class CreateProduct extends Product {
 
     products = [
         new Product
-        (`Pillow`, `https://www.ageukincontinence.co.uk/media/catalog/product/w/h/white-pillow-1200x1200-min.jpg?quality=80&fit=bounds&height=1000&width=1000&canvas=1000:1000`, `Bed pillow offers exceptional comfort for a better night's sleep`, 39.99),
+        (`Pillow`, `https://cdn.thewirecutter.com/wp-content/media/2025/12/BEST-MEMORY-FOAM-PILLOWS-2048px-6822.jpg?auto=webp&quality=75&width=1024`, `Bed pillow offers exceptional comfort for a better night's sleep`, 39.99),
         new Product
         (`Box Spring Bed `, `https://m.media-amazon.com/images/I/81a-oJGw2-L._AC_UF894,1000_QL80_.jpg`, `Durable fabric: The fabric features a simple and clean look, and is breathable and durable. `, 425.68)
     ]
+
+    cart = [];
 
     getProducts() {
         return this.products;
@@ -44,8 +46,14 @@ class CreateProduct extends Product {
         <div><img src="${product.image}" alt="${product.title}"></div>
         <div><p>${product.description}</p></div>
         <div><p>${product.price}</p></div>
+        <div><button>Add to Cart</button></div>
         `
-
+        const addToCartBtn = liElement.querySelector(`button`);
+        addToCartBtn.addEventListener("click", () => {
+            this.cart.push(product);
+            console.log(product);
+            console.log(this.cart);
+        })
         return liElement;
     }
 }
@@ -54,7 +62,6 @@ class RenderProduct extends CreateProduct {
     constructor() {
         super();
     }
-
 
     render() {
         const divApp = document.getElementById(`app`);
@@ -70,7 +77,7 @@ class RenderProduct extends CreateProduct {
     }
 }
 
-class Cart extends RenderProduct{
+class Cart extends RenderProduct {
     constructor() {
         super();
     }
@@ -79,7 +86,8 @@ class Cart extends RenderProduct{
         const cartEl = document.createElement('section');
         cartEl.innerHTML = `
         <div class="cart">
-        <div><h3>Items</h3><p>Total Amount</p></div>
+        <div><h3>Total Items: </h3></div>
+        <div><p>Total Amount: </p></div>
         </div>
         `
         const divApp = document.getElementById(`app`);
