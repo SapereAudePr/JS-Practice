@@ -1,181 +1,62 @@
 class Product {
-    constructor(title, image, desc, price) {
-        this.title = title;
-        this.imageUrl = image;
-        this.description = desc;
-        this.price = price;
+    constructor(t, i, d, p) {
+        this.title = t;
+        this.image = i;
+        this.description = d;
+        this.price = p;
     }
 }
 
-class ElementAttribute {
-    constructor(attrName, attrValue) {
-        this.name = attrName;
-        this.value = attrValue;
-    }
-}
-
-class Component {
-    constructor(renderHookId, shouldRender = true) {
-        this.hookId = renderHookId;
-        if (shouldRender) {
-            this.render();
-        }
-    }
-
-    render() {
-    }
-
-    createRootElement(tag, cssClasses, attributes) {
-        const rootElement = document.createElement(tag);
-        if (cssClasses) {
-            rootElement.className = cssClasses;
-        }
-        if (attributes && attributes.length > 0) {
-            for (const attr of attributes) {
-                rootElement.setAttribute(attr.name, attr.value);
-            }
-        }
-        document.getElementById(this.hookId).append(rootElement);
-        return rootElement;
-    }
-}
-
-class ShoppingCart extends Component {
-    items = [];
-
-    set cartItems(value) {
-        this.items = value;
-        this.totalOutput.innerHTML = `<h2>Total: \$${this.totalAmount.toFixed(
-            2
-        )}</h2>`;
-    }
-
-    get totalAmount() {
-        return this.items.reduce(
-            (prevValue, curItem) => prevValue + curItem.price,
-            0
-        );
-    }
-
-    constructor(renderHookId) {
-        super(renderHookId);
-        // this.render();
-    }
-
-    addProduct(product) {
-        const updatedItems = [...this.items];
-        updatedItems.push(product);
-        this.cartItems = updatedItems;
-    }
-
-    orderProducts() {
-        console.log(this.items)
-    }
-
-    render() {
-        const cartEl = this.createRootElement('section', 'cart');
-        cartEl.innerHTML = `
-      <h2>Total: \$${0}</h2>
-      <button>Order Now!</button>
-    `;
-        const orderBtn = cartEl.querySelector('button');
-        orderBtn.addEventListener('click', this.orderProducts.bind(this));
-        this.totalOutput = cartEl.querySelector('h2');
-    }
-}
-
-class ProductItem extends Component {
-    constructor(product, renderHookId) {
-        super(renderHookId, false);
-        this.product = product;
-        this.render();
-    }
-
-    addToCart() {
-        App.addProductToCart(this.product);
-    }
-
-    render() {
-        const prodEl = this.createRootElement('li', 'product-item');
-        prodEl.innerHTML = `
-        <div>
-          <img src="${this.product.imageUrl}" alt="${this.product.title}" >
-          <div class="product-item__content">
-            <h2>${this.product.title}</h2>
-            <h3>\$${this.product.price}</h3>
-            <p>${this.product.description}</p>
-            <button>Add to Cart</button>
-          </div>
-        </div>
-      `;
-        const addCartButton = prodEl.querySelector('button');
-        addCartButton.addEventListener('click', this.addToCart.bind(this));
-    }
-}
-
-class ProductList extends Component {
-    products = [];
-
-    constructor(renderHookId) {
-        super(renderHookId);
-        this.fetchProducts();
-    }
-
-    fetchProducts() {
-        this.products = [
-            new Product(
-                'A Pillow',
-                'https://greggvanourek.com/wp-content/uploads/2023/08/Nature-path-by-water-trees-and-mountains-AdobeStock_291242770-scaled.jpeg',
-                'A soft pillow!',
-                19.99
-            ),
-            new Product(
-                'A Carpet',
-                'https://www.allianz.com/en/mediacenter/news/reports/250703-nature-on-the-brink-why-a-thriving-planet-matters-for-us-all/_jcr_content/root/parsys/wrapper/wrapper/image_copy_copy.img.82.3360.jpeg/1751523991160/nature-on-the-brink-3b.jpeg',
-                'A carpet which you might like - or not.',
-                89.99
-            )
-        ];
-        this.renderProducts();
-    }
-
-    renderProducts() {
-        for (const prod of this.products) {
-            new ProductItem(prod, 'prod-list');
-        }
-
-    }
-
-    render() {
-        this.createRootElement('ul', 'product-list', [
-            new ElementAttribute('id', 'prod-list')
-        ]);
-
-    }
-}
-
-class Shop {
+class CreateProduct extends Product {
     constructor() {
-        this.render();
+        super();
     }
+
+    products = [
+        new Product
+        (`Pillow`, `https://www.ageukincontinence.co.uk/media/catalog/product/w/h/white-pillow-1200x1200-min.jpg?quality=80&fit=bounds&height=1000&width=1000&canvas=1000:1000`, `Bed pillow offers exceptional comfort for a better night's sleep`, 39.99),
+        new Product
+        (`Box Spring Bed `, `https://m.media-amazon.com/images/I/81a-oJGw2-L._AC_UF894,1000_QL80_.jpg`, `Durable fabric: The fabric features a simple and clean look, and is breathable and durable. `, 425.68)
+    ]
+
+    getProducts() {
+        return this.products;
+    }
+
+    createProduct(product) {
+        const liElement = document.createElement("li");
+        liElement.className = `product-item`
+
+        liElement.innerHTML = `
+        <div><h2>${product.title}</h2></div>
+        <div><img src="${product.image}" alt="${product.title}"></div>
+        <div><p>${product.description}</p></div>
+        <div><p>${product.price}</p></div>
+        `
+
+        return liElement;
+    }
+}
+
+class RenderProduct extends CreateProduct {
+    constructor() {
+        super();
+    }
+
 
     render() {
-        this.cart = new ShoppingCart('app');
-        new ProductList('app');
+        const divApp = document.getElementById(`app`);
+        const ulElement = document.createElement("ul");
+        ulElement.id = `product-list`;
+
+        this.getProducts().forEach(product => {
+            const liElement = this.createProduct(product);
+            ulElement.append(liElement);
+        })
+
+        divApp.append(ulElement);
     }
 }
 
-class App {
-    static cart;
-
-    static init() {
-        const shop = new Shop();
-        this.cart = shop.cart;
-    }
-
-    static addProductToCart(product) {
-        this.cart.addProduct(product);
-    }
-}
-
-App.init();
+const renderProduct = new RenderProduct();
+renderProduct.render();

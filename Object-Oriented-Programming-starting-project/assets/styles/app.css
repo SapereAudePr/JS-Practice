@@ -1,93 +1,144 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  font-family: sans-serif;
+    font-family: 'Roboto', sans-serif; /* Using a more common font */
 }
 
 body {
-  margin: 0;
+    margin: 0;
+    background-color: #f7f7f7; /* Light background for contrast */
 }
 
+/* --- Header Styles --- */
 header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 4rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #540075;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.26);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #540075;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
+    z-index: 10;
 }
 
 header h1 {
-  color: white;
-  font-size: 2rem;
+    color: white;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    margin: 0;
 }
 
+/* --- Button Styles --- */
 button {
-  background: #540075;
-  color: white;
-  border: 1px solid #540075;
-  border-radius: 5px;
-  padding: 0.5rem 2rem;
-  font: inherit;
-  cursor: pointer;
+    background: #540075;
+    color: white;
+    border: 1px solid #540075;
+    border-radius: 8px; /* Slightly rounder corners */
+    padding: 0.6rem 2.5rem;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
 
 button:focus {
-  outline: none;
+    outline: none;
 }
 
 button:hover,
 button:active {
-  background: #790fa3;
-  border-color: #790fa3;
+    background: #790fa3;
+    border-color: #790fa3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
 }
 
+/* --- Cart Styles --- */
 .cart {
-  margin: 5rem 2rem;
-  border: 2px solid #540075;
-  border-radius: 10px;
-  padding: 2rem;
-  display: flex;
-  justify-content: space-between;
+    margin: 5rem 2rem 2rem 2rem; /* Adjusted top margin to clear fixed header */
+    border: 2px solid #540075;
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
 }
 
 .cart h2 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: #540075;
+    margin: 0;
+    font-size: 1.8rem; /* Slightly larger heading */
+    color: #540075;
 }
 
+/* --- Product List Styles --- */
 .product-list {
-  list-style: none;
-  margin: 0 2rem;
-  padding: 0;
+    list-style: none;
+    margin: 0 2rem;
+    padding: 0;
+    /* Optional: Use Flexbox to center the list horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+/* --- Product Item Styles --- */
 .product-item {
-  margin: 2rem auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  width: 50rem;
-  max-width: 90%;
+    margin: 2.5rem 0; /* Vertical spacing between products */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Softer, more modern shadow */
+    width: 50rem;
+    max-width: 95%; /* Increased max-width tolerance */
+    border-radius: 10px; /* Rounded corners for the card */
+    overflow: hidden; /* Ensures image corners match card corners */
+    background-color: white;
+    transition: transform 0.3s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-3px); /* Subtle lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .product-item img {
-  width: 100%;
-  height: 20rem;
-  object-fit: cover;
+    width: 100%;
+    height: 18rem; /* Reduced image height slightly */
+    object-fit: cover;
+    border-bottom: 1px solid #eee; /* Separator line for image */
 }
 
-.product-item__content {
-  padding: 1rem;
-  text-align: center;
+/* NEW: Styles for the content inside the product-item */
+.product-item > div:not(:first-child) {
+    padding: 0 1.5rem; /* Padding for the inner content divs */
+    margin-bottom: 1rem;
 }
 
-.product-item h2,
-.product-item h3 {
-  margin: 0 0 1rem 0;
+.product-item h2 {
+    /* Title Div */
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 1.75rem;
+    color: #540075;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-item p {
+    /* Description and Price */
+    margin: 0;
+    line-height: 1.4;
+    color: #333;
+}
+
+.product-item > div:nth-child(4) {
+    /* Price Div - using nth-child to target the price */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #008000; /* Green for price */
+    text-align: right;
+    padding-bottom: 1.5rem;
 }
