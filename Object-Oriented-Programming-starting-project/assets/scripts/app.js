@@ -15,11 +15,27 @@ class Product {
             console.warn("Price should be greater than 0");
             this._price = 0;
         }
-        return this._price = price;
+        this._price = price;
     }
 }
 
-class CreateProduct extends Product {
+class Cart {
+    items = [];
+
+    render() {
+        const cartEl = document.createElement('section');
+        cartEl.innerHTML = `
+        <div class="cart">
+        <div><h3>Total Items:</h3></div>
+        <div><p>Total Amount: </p></div>
+        </div>
+        `
+        const divApp = document.getElementById(`app`);
+        divApp.prepend(cartEl);
+    }
+}
+
+class CreateProduct extends Cart{
     constructor() {
         super();
     }
@@ -30,8 +46,6 @@ class CreateProduct extends Product {
         new Product
         (`Box Spring Bed `, `https://m.media-amazon.com/images/I/81a-oJGw2-L._AC_UF894,1000_QL80_.jpg`, `Durable fabric: The fabric features a simple and clean look, and is breathable and durable. `, 425.68)
     ]
-
-    cart = [];
 
     getProducts() {
         return this.products;
@@ -50,9 +64,9 @@ class CreateProduct extends Product {
         `
         const addToCartBtn = liElement.querySelector(`button`);
         addToCartBtn.addEventListener("click", () => {
-            this.cart.push(product);
+            this.items.push(product);
             console.log(product);
-            console.log(this.cart);
+            console.log(this.items);
         })
         return liElement;
     }
@@ -77,23 +91,7 @@ class RenderProduct extends CreateProduct {
     }
 }
 
-class Cart extends RenderProduct {
-    constructor() {
-        super();
-    }
 
-    render() {
-        const cartEl = document.createElement('section');
-        cartEl.innerHTML = `
-        <div class="cart">
-        <div><h3>Total Items: </h3></div>
-        <div><p>Total Amount: </p></div>
-        </div>
-        `
-        const divApp = document.getElementById(`app`);
-        divApp.prepend(cartEl);
-    }
-}
 
 const renderProduct = new RenderProduct();
 renderProduct.render();
