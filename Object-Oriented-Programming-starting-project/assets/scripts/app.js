@@ -35,7 +35,7 @@ class Cart {
     }
 }
 
-class CreateProduct extends Cart{
+class CreateProduct extends Cart {
     constructor() {
         super();
     }
@@ -90,7 +90,6 @@ class RenderProduct extends CreateProduct {
         divApp.append(ulElement);
     }
 }
-
 
 
 const renderProduct = new RenderProduct();
