@@ -17,27 +17,51 @@ class Product {
         }
         this._price = price;
     }
+
+    get rawPrice() {
+        return this._price;
+    }
 }
 
 class Cart {
     items = [];
+    totalAmountEl;
+    totalItemsEl;
+
+    get totalAmount() {
+        return this.items.reduce((total, item) => total + item.rawPrice, 0);
+    }
+
+    updateDisplay() {
+        if (this.totalAmountEl) {
+            this.totalAmountEl.textContent = `Total Amount: $${this.totalAmount}`;
+        }
+        if (this.totalItemsEl) {
+            this.totalItemsEl.textContent = `Total Items: ${this.items.length}`;
+        }
+    }
+
 
     render() {
         const cartEl = document.createElement('section');
         cartEl.innerHTML = `
         <div class="cart">
-        <div><h3>Total Items:</h3></div>
-        <div><p>Total Amount: </p></div>
+        <div><h3 id="cart-total-items">Total Items: ${this.items.length}</h3></div>
+        <div><p id="cart-total-amount">Total Amount: $${this.totalAmount}</p></div>
         </div>
         `
+
+        this.totalAmountEl = cartEl.querySelector(`#cart-total-amount`);
+        this.totalItemsEl = cartEl.querySelector(`#cart-total-items`);
+
         const divApp = document.getElementById(`app`);
         divApp.prepend(cartEl);
     }
 }
 
-class CreateProduct extends Cart {
-    constructor() {
-        super();
+class CreateProduct{
+    constructor(cartInstance) {
+        this.cart = cartInstance;
     }
 
     products = [
@@ -64,17 +88,18 @@ class CreateProduct extends Cart {
         `
         const addToCartBtn = liElement.querySelector(`button`);
         addToCartBtn.addEventListener("click", () => {
-            this.items.push(product);
+            this.cart.items.push(product);
+            this.cart.updateDisplay();
             console.log(product);
-            console.log(this.items);
+            console.log(this.cart.items);
         })
         return liElement;
     }
 }
 
 class RenderProduct extends CreateProduct {
-    constructor() {
-        super();
+    constructor(cartInstance) {
+        super(cartInstance);
     }
 
     render() {
@@ -91,9 +116,9 @@ class RenderProduct extends CreateProduct {
     }
 }
 
-
-const renderProduct = new RenderProduct();
-renderProduct.render();
-
 const cart = new Cart();
 cart.render();
+
+const renderProduct = new RenderProduct(cart);
+renderProduct.render();
+
