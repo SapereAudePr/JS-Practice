@@ -41,25 +41,36 @@ class Cart {
         }
     }
 
+    orderCart() {
+        let cartList = []
+        if (this.items.length === 0) return;
+        this.items.forEach((item) => cartList.push(item));
+        console.log(`Ordering:`);
+        console.log(cartList);
+    }
 
     render() {
         const cartEl = document.createElement('section');
         cartEl.innerHTML = `
         <div class="cart">
         <div><h3 id="cart-total-items">Total Items: ${this.items.length}</h3></div>
-        <div><p id="cart-total-amount">Total Amount: $${this.totalAmount}</p></div>
+        <div><h3 id="cart-total-amount">Total Amount: $${this.totalAmount}</h3></div>
+        <button>Order Now!</button>
         </div>
         `
 
         this.totalAmountEl = cartEl.querySelector(`#cart-total-amount`);
         this.totalItemsEl = cartEl.querySelector(`#cart-total-items`);
 
+        const orderCartBtn = cartEl.querySelector(`button`);
+        orderCartBtn.addEventListener(`click`, this.orderCart.bind(this));
+
         const divApp = document.getElementById(`app`);
         divApp.prepend(cartEl);
     }
 }
 
-class CreateProduct{
+class CreateProduct {
     constructor(cartInstance) {
         this.cart = cartInstance;
     }
@@ -90,8 +101,8 @@ class CreateProduct{
         addToCartBtn.addEventListener("click", () => {
             this.cart.items.push(product);
             this.cart.updateDisplay();
-            console.log(product);
-            console.log(this.cart.items);
+            // console.log(product);
+            // console.log(this.cart.items);
         })
         return liElement;
     }
