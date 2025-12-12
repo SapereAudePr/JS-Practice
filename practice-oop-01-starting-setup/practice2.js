@@ -1,34 +1,74 @@
-class Student {
-    constructor(name, teacher) {
+class Player {
+    constructor(name, enemy, logger) {
         this.name = name;
-        this.teacher = teacher;
-        console.log(teacher);
+        this.enemy = enemy;
+        this.health = 100;
+        this.logger = logger;
     }
 
-    study() {
-        console.log(`Studying: ${this.name}`);
-        this.teacher.teach(this);
+    attack() {
+        const rndNum = Math.floor(Math.random() * 30);
+        this.enemy.takeDamage(rndNum);
+        this.logger.log(`Outgoing damage to ${this.enemy.name} is: ${rndNum}`)
+    }
+
+    takeDamage(amount) {
+        const damage = this.health -= amount;
+        this.logger.log(`${this.name} health after damage: ${damage}`);
+
+        if (this.health <= 0) {
+            this.logger.log(`${this.name} is dead!`)
+        }
     }
 }
 
-class Teacher {
-    constructor(name) {
+class Enemy {
+    constructor(name, player, logger) {
         this.name = name;
+        this.logger = logger;
+        this.health = 100;
+        this.player = player;
     }
 
-    teach(student) {
-        console.log(`${this.name} is teaching ${student.name}`);
+    attack() {
+        const rndNum = Math.floor(Math.random() * 30);
+        this.player.takeDamage(rndNum);
+        this.logger.log(`Outgoing damage to the ${this.player.name} is: ${rndNum}`);
+    }
+
+    takeDamage(amount) {
+        const damage = this.health -= amount;
+        this.logger.log(`${this.name} health after damage: ${damage}`);
+
+        if (this.health <= 0) {
+            this.logger.log(`${this.name} is dead!`)
+        }
+
+        this.attack();
+    }
+}
+
+class Logger {
+    constructor(index) {
+        this.index = 0;
+    }
+
+    log(text) {
+        this.index++;
+        console.log(`[${this.index}] [LOG] ${text}`);
     }
 }
 
 class App {
     constructor() {
-        this.teacher = new Teacher(`John Doe`);
-        this.student = new Student(`Raven`, this.teacher);
+        this.logger = new Logger();
+        this.player = new Player(`Hero`, null, this.logger);
+        this.enemy = new Enemy(`Ogre`, this.player, this.logger);
+        this.player.enemy = this.enemy;
     }
 
     run() {
-        this.student.study();
+        this.player.attack();
     }
 }
 
