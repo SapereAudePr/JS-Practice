@@ -5,14 +5,14 @@ class User {
     }
 
     borrowBook(book) {
-
+        this.borrowedBooks.push(book);
+        book.borrowBook(this);
     }
 
     returnBook(book) {
 
     }
 }
-
 
 class Book {
     constructor(title, isBorrowed = false, borrowedBy = null) {
@@ -21,7 +21,16 @@ class Book {
         this.borrowedBy = borrowedBy;
     }
 
-    borrowBook(book) {
+    borrowBook(user) {
+        user.borrowedBooks.forEach((book) => {
+            if (book.isBorrowed) {
+                console.log(`${book.title} is already borrowed by ${user.name}!`);
+                return;
+            }
+            this.borrowedBy = user.name
+            this.isBorrowed = true;
+            console.log(book);
+        })
 
     }
 
@@ -42,6 +51,7 @@ class Library {
     }
 
     addUser(user) {
+        this.users.push(user);
     }
 
     listAvailableBooks() {
@@ -49,6 +59,12 @@ class Library {
             if (book.isBorrowed === false) {
                 this.logger.log(`Available book: ${book.title}`);
             }
+        })
+    }
+
+    listUsers() {
+        this.users.forEach(user => {
+            console.log(user.name)
         })
     }
 }
@@ -67,9 +83,7 @@ class Logger {
 class App {
     constructor() {
         this.logger = new Logger();
-        this.book = new Book();
         this.library = new Library(this.logger);
-        this.user = new User(this.book);
 
         this.book1 = new Book(`The Ministry for the Future`, false, null);
         this.book2 = new Book(`Where the Crawdads Sing`, false, null);
@@ -83,17 +97,26 @@ class App {
         this.library.addBook(this.book4);
         this.library.addBook(this.book5);
 
-        this.user1 = new User(`Alice`);
-        this.user2 = new User(`Bok`);
+        const alice = new User(`Alice`);
+        const john = new User(`John`);
+        const raven = new User(`Raven`);
 
-        this.library.addUser(this.user1);
-        this.library.addUser(this.user2);
+        this.library.addUser(this.alice);
+        this.library.addUser(this.john);
+
+        this.alice = alice;
+        this.john = john;
+        this.raven = raven;
     }
 
     run() {
+        this.alice.borrowBook(this.book1);
+        this.john.borrowBook(this.book2);
+        this.raven.borrowBook(this.book1);
+
+
         this.library.listAvailableBooks();
-
-
+        // this.library.listUsers();
     }
 }
 
