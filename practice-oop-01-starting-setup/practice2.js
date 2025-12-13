@@ -15,22 +15,22 @@ class User {
 }
 
 class Book {
-    constructor(title, isBorrowed = false, borrowedBy = null) {
+    constructor(title, logger) {
         this.title = title;
-        this.isBorrowed = isBorrowed;
-        this.borrowedBy = borrowedBy;
+        this.isBorrowed = false;
+        this.borrowedBy = null;
+        this.logger = logger;
     }
 
     borrowBook(user) {
-        user.borrowedBooks.forEach((book) => {
-            if (book.isBorrowed) {
-                console.log(`${book.title} is already borrowed by ${user.name}!`);
-                return;
-            }
-            this.borrowedBy = user.name
-            this.isBorrowed = true;
-            console.log(book);
-        })
+        if (this.isBorrowed) {
+            this.logger.log(`-- [WARNING!] ${this.title} is already borrowed by ${this.borrowedBy}!`)
+            return;
+        }
+        this.borrowedBy = user.name
+        this.isBorrowed = true;
+
+        console.log(this);
 
     }
 
@@ -57,7 +57,7 @@ class Library {
     listAvailableBooks() {
         this.books.forEach(book => {
             if (book.isBorrowed === false) {
-                this.logger.log(`Available book: ${book.title}`);
+                this.logger.log(`-- [Available books]: ${book.title}`);
             }
         })
     }
@@ -85,24 +85,31 @@ class App {
         this.logger = new Logger();
         this.library = new Library(this.logger);
 
-        this.book1 = new Book(`The Ministry for the Future`, false, null);
-        this.book2 = new Book(`Where the Crawdads Sing`, false, null);
-        this.book3 = new Book(`Norwegian Wood`, false, null);
-        this.book4 = new Book(`Sapiens: A Brief History of Humankind`, false, null);
-        this.book5 = new Book(`A Gentleman in Moscow`, false, null);
+        const book1 = new Book(`The Ministry for the Future`, this.logger, false, null,);
+        const book2 = new Book(`Where the Crawdads Sing`, this.logger, false, null,);
+        const book3 = new Book(`Norwegian Wood`, this.logger, false, null,);
+        const book4 = new Book(`Sapiens: A Brief History of Humankind`, this.logger, false, null,);
+        const book5 = new Book(`A Gentleman in Moscow`, this.logger, false, null,);
 
-        this.library.addBook(this.book1);
-        this.library.addBook(this.book2);
-        this.library.addBook(this.book3);
-        this.library.addBook(this.book4);
-        this.library.addBook(this.book5);
+        this.library.addBook(book1);
+        this.library.addBook(book2);
+        this.library.addBook(book3);
+        this.library.addBook(book4);
+        this.library.addBook(book5);
+
+        this.book1 = book1
+        this.book2 = book2
+        this.book3 = book3
+        this.book4 = book4
+        this.book5 = book5
 
         const alice = new User(`Alice`);
         const john = new User(`John`);
         const raven = new User(`Raven`);
 
-        this.library.addUser(this.alice);
-        this.library.addUser(this.john);
+        this.library.addUser(alice);
+        this.library.addUser(john);
+        this.library.addUser(raven);
 
         this.alice = alice;
         this.john = john;
@@ -112,7 +119,9 @@ class App {
     run() {
         this.alice.borrowBook(this.book1);
         this.john.borrowBook(this.book2);
-        this.raven.borrowBook(this.book1);
+        // this.raven.borrowBook(this.book1);
+        this.raven.borrowBook(this.book3);
+        this.raven.borrowBook(this.book4);
 
 
         this.library.listAvailableBooks();
