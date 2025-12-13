@@ -7,6 +7,7 @@ class Player {
     }
 
     attack() {
+        if (this.enemy.health <= 0) return;
         const rndNum = Math.floor(Math.random() * 30);
         this.enemy.takeDamage(rndNum);
         this.logger.log(`Outgoing damage to ${this.enemy.name} is: ${rndNum}`)
@@ -41,7 +42,8 @@ class Enemy {
         this.logger.log(`${this.name} health after damage: ${this.health}`);
 
         if (this.health <= 0) {
-            this.logger.log(`${this.name} is dead!`)
+            this.logger.log(`${this.name} is dead!`);
+            return;
         }
 
         this.attack();
