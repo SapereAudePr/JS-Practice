@@ -13,8 +13,8 @@ class Player {
     }
 
     takeDamage(amount) {
-        const damage = this.health -= amount;
-        this.logger.log(`${this.name} health after damage: ${damage}`);
+        this.health -= amount;
+        this.logger.log(`${this.name} health after damage: ${this.health}`);
 
         if (this.health <= 0) {
             this.logger.log(`${this.name} is dead!`)
@@ -37,8 +37,8 @@ class Enemy {
     }
 
     takeDamage(amount) {
-        const damage = this.health -= amount;
-        this.logger.log(`${this.name} health after damage: ${damage}`);
+        this.health -= amount;
+        this.logger.log(`${this.name} health after damage: ${this.health}`);
 
         if (this.health <= 0) {
             this.logger.log(`${this.name} is dead!`)
@@ -49,8 +49,8 @@ class Enemy {
 }
 
 class Logger {
-    constructor(index) {
-        this.index = 0;
+    constructor(startingIndex = 0) {
+        this.index = startingIndex;
     }
 
     log(text) {
@@ -68,7 +68,17 @@ class App {
     }
 
     run() {
-        this.player.attack();
+        let turn = 1;
+        while (this.player.health > 0 && this.enemy.health > 0) {
+            this.player.attack();
+            turn++;
+            this.logger.log(`$$$$$$$$$[TURN] --${turn}--  $$$$$$$$$$`);
+
+            if (turn > 100) {
+                this.logger.log(`Turn is reached out it's limit: ${turn}`)
+                break;
+            }
+        }
     }
 }
 
