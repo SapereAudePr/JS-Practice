@@ -1,5 +1,5 @@
 class User {
-    constructor(name, borrowedBooks = [], ) {
+    constructor(name, borrowedBooks = []) {
         this.name = name;
         this.borrowedBooks = borrowedBooks;
     }
@@ -31,22 +31,25 @@ class Book {
 }
 
 class Library {
-    constructor(books = [], users = []) {
+    constructor(logger, books = [], users = []) {
+        this.logger = logger;
         this.books = books;
         this.users = users;
-
     }
 
     addBook(book) {
-        console.log(book);
+        this.books.push(book);
     }
 
     addUser(user) {
-        console.log(user);
     }
 
     listAvailableBooks() {
-
+        this.books.forEach(book => {
+            if (book.isBorrowed === false) {
+                this.logger.log(`Available book: ${book.title}`);
+            }
+        })
     }
 }
 
@@ -65,8 +68,8 @@ class App {
     constructor() {
         this.logger = new Logger();
         this.book = new Book();
-        this.library = new Library();
-        this.user = new User();
+        this.library = new Library(this.logger);
+        this.user = new User(this.book);
 
         this.book1 = new Book(`The Ministry for the Future`, false, null);
         this.book2 = new Book(`Where the Crawdads Sing`, false, null);
@@ -88,7 +91,9 @@ class App {
     }
 
     run() {
-        const f1 = this.user.borrowBook(this.book1, this.user1);
+        this.library.listAvailableBooks();
+
+
     }
 }
 
