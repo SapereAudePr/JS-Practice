@@ -1,7 +1,29 @@
 class Customer {
-    constructor(logger ,client, cart) {
+    constructor(logger, client, cart) {
         this.logger = logger;
         this.client = client;
+        this.cart = [];
+    }
+
+    addToCart(product, quantity) {
+        const items = {
+            product,
+            quantity,
+        }
+        this.cart.push(items);
+        this.checkout(items);
+    }
+
+    removeFromCart(product) {
+
+    }
+
+    checkout(store) {
+        const all = {
+            product: store,
+            customer: this,
+        }
+        store.product.decreaseStock(all.product.quantity);
     }
 }
 
@@ -9,25 +31,30 @@ class Product {
     constructor(logger, name, price, stock) {
         this.logger = logger;
         this.name = name;
-        this.price = price;
+        this._price = price;
         this.stock = 0;
     }
 
-
-
-    increaseStock() {
-
+    get price() {
+        return `$${this._price}`;
     }
 
-    decreaseStock() {
-
+    set price(price) {
+        this._price = price;
     }
 
+    increaseStock(amount) {
+        this.stock += amount;
+    }
 
+    decreaseStock(amount) {
+        this.stock -= amount;
+    }
 }
 
 class Store {
-    constructor(products = [], orders = []) {
+    constructor(logger, products = [], orders = []) {
+        this.logger = logger;
         this.products = products;
         this.orders = orders;
     }
@@ -37,15 +64,12 @@ class Store {
     }
 
     listProduct() {
-        let index= 0;
         this.products.forEach(product => {
-            index++;
-            console.log(`[${index}] [${product.name}] -- ${product.price} -- ${product.stock}]`);
-        })
-        // console.log(this.products);
+            this.logger.log(`[${product.name}] -- ${product.price} -- ${product.stock}]`);
+        });
     }
 
-    orderProduct(customer) {
+    processOrder(customer) {
 
     }
 }
@@ -64,8 +88,7 @@ class Logger {
 class App {
     constructor() {
         this.logger = new Logger();
-
-        this.store = new Store();
+        this.store = new Store(this.logger);
 
         const product1 = new Product(this.logger, `Nebula Keycap Set`, 45.99, 150);
         const product2 = new Product(this.logger, `Emberglow Candle`, 18.45, 320);
@@ -106,11 +129,26 @@ class App {
 
         this.customer1 = customer1;
         this.customer2 = customer2;
-
-
     }
 
     run() {
+
+        this.product1.increaseStock(150);
+        this.product2.increaseStock(320);
+        this.product3.increaseStock(45);
+        this.product4.increaseStock(88);
+        this.product5.increaseStock(500);
+        this.product6.increaseStock(110);
+        this.product7.increaseStock(22);
+        this.product8.increaseStock(750);
+        this.product9.increaseStock(12);
+        this.product10.increaseStock(55);
+
+        this.customer1.addToCart(this.product1, 5);
+        this.customer1.addToCart(this.product2, 3);
+        this.customer1.addToCart(this.product3, 7);
+        this.customer1.addToCart(this.product4, 10);
+
         this.store.listProduct();
     }
 }
