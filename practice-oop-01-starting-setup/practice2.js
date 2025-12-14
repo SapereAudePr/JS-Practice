@@ -15,8 +15,11 @@ class User {
     }
 
     returnBook(book) {
-        this.borrowedBooks.splice(0, 1, book);
-        book.returnBook(this);
+        const index = this.borrowedBooks.indexOf(book);
+        if (index > -1) {
+            this.borrowedBooks.splice(index, 1);
+            book.returnBook(this);
+        }
     }
 }
 
