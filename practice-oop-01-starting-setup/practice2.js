@@ -1,165 +1,119 @@
-class User {
-    constructor(name, logger, borrowedBooks = []) {
+class Customer {
+    constructor(logger ,client, cart) {
+        this.logger = logger;
+        this.client = client;
+    }
+}
+
+class Product {
+    constructor(logger, name, price, stock) {
+        this.logger = logger;
         this.name = name;
-        this.borrowedBooks = borrowedBooks;
-        this.logger = logger;
+        this.price = price;
+        this.stock = 0;
     }
 
-    borrowBook(book) {
-        if (this.borrowedBooks.length >= 3) {
-            this.logger.log(`-- [WARNING!] ${this.name} can't borrow ${book.title}. ${this.name} already has: ${this.borrowedBooks.length} books!`);
-            return;
-        }
-        this.borrowedBooks.push(book);
-        book.borrowBook(this);
+
+
+    increaseStock() {
+
     }
 
-    returnBook(book) {
-        const index = this.borrowedBooks.indexOf(book);
-        if (index > -1) {
-            this.borrowedBooks.splice(index, 1);
-            book.returnBook(this);
-        }
+    decreaseStock() {
+
     }
+
+
 }
 
-class Book {
-    constructor(title, logger) {
-        this.title = title;
-        this.isBorrowed = false;
-        this.borrowedBy = null;
-        this.logger = logger;
+class Store {
+    constructor(products = [], orders = []) {
+        this.products = products;
+        this.orders = orders;
     }
 
-    borrowBook(user) {
-        if (this.isBorrowed) {
-            this.logger.log(` -- [WARNING!] ${user.name} can't borrow ${this.title} is already borrowed by ${this.borrowedBy}!`)
-            return;
-        }
-
-        this.borrowedBy = user.name
-        this.isBorrowed = true;
-
-        this.logger.log(` -- [BORROWED!] ${this.title} is borrowed by ${this.borrowedBy}!`)
+    addProduct(product) {
+        this.products.push(product);
     }
 
-    returnBook(user) {
-        this.borrowedBy = null;
-        this.isBorrowed = false;
-
-        this.logger.log(`${user.name} is returning ${this.title}`)
-    }
-}
-
-class Library {
-    constructor(logger, books = [], users = []) {
-        this.logger = logger;
-        this.books = books;
-        this.users = users;
-    }
-
-    addBook(book) {
-        this.books.push(book);
-    }
-
-    addUser(user) {
-        this.users.push(user);
-    }
-
-    listAvailableBooks() {
-        this.books.forEach(book => {
-            if (book.isBorrowed === false) {
-                this.logger.log(`-- [Available book]: ${book.title}`);
-            }
+    listProduct() {
+        let index= 0;
+        this.products.forEach(product => {
+            index++;
+            console.log(`[${index}] [${product.name}] -- ${product.price} -- ${product.stock}]`);
         })
+        // console.log(this.products);
     }
 
-    listUsers() {
-        this.users.forEach(user => {
-            console.log(user.name)
-        })
+    orderProduct(customer) {
+
     }
 }
 
 class Logger {
-    constructor() {
+    constructor(index) {
         this.index = 0;
     }
 
     log(text) {
         this.index++;
-        console.log(`[LOG] -- [${this.index}] ${text}`);
+        console.log(`[LOG] [${this.index}] ${text}`);
     }
 }
 
 class App {
     constructor() {
         this.logger = new Logger();
-        this.library = new Library(this.logger);
 
-        const book1 = new Book(`The Ministry for the Future`, this.logger);
-        const book2 = new Book(`Where the Crawdads Sing`, this.logger);
-        const book3 = new Book(`Norwegian Wood`, this.logger);
-        const book4 = new Book(`Sapiens: A Brief History of Humankind`, this.logger);
-        const book5 = new Book(`A Gentleman in Moscow`, this.logger);
-        const book6 = new Book(`The Martian`, this.logger);
-        const book7 = new Book(`The WW2 History`, this.logger);
-        const book8 = new Book(`Eden in the Amazon`, this.logger);
+        this.store = new Store();
 
-        this.library.addBook(book1);
-        this.library.addBook(book2);
-        this.library.addBook(book3);
-        this.library.addBook(book4);
-        this.library.addBook(book5);
-        this.library.addBook(book6);
-        this.library.addBook(book7);
-        this.library.addBook(book8);
+        const product1 = new Product(this.logger, `Nebula Keycap Set`, 45.99, 150);
+        const product2 = new Product(this.logger, `Emberglow Candle`, 18.45, 320);
+        const product3 = new Product(this.logger, `Quantum Coffee Blend`, 12.75, 45);
+        const product4 = new Product(this.logger, `The Silent Oar Book`, 25.00, 88);
+        const product5 = new Product(this.logger, `Aetherial Socks (3-pack)`, 9.99, 500);
+        const product6 = new Product(this.logger, `Terra-Volt Charger`, 39.95, 110);
+        const product7 = new Product(this.logger, `Chrono-Dial Watch`, 145.00, 22);
+        const product8 = new Product(this.logger, `Zenith Sketchpad`, 6.50, 750);
+        const product9 = new Product(this.logger, `Pocket Meteorite`, 85.30, 12);
+        const product10 = new Product(this.logger, `Whirlwind Blender`, 79.99, 55);
 
-        this.book1 = book1
-        this.book2 = book2
-        this.book3 = book3
-        this.book4 = book4
-        this.book5 = book5
-        this.book6 = book6
-        this.book7 = book7
-        this.book8 = book8
+        this.store.addProduct(product1);
+        this.store.addProduct(product2);
+        this.store.addProduct(product3);
+        this.store.addProduct(product4);
+        this.store.addProduct(product5);
+        this.store.addProduct(product6);
+        this.store.addProduct(product7);
+        this.store.addProduct(product8);
+        this.store.addProduct(product9);
+        this.store.addProduct(product10);
 
-        const alice = new User(`Alice`, this.logger);
-        const john = new User(`John`, this.logger);
-        const raven = new User(`Raven`, this.logger);
+        this.product1 = product1;
+        this.product2 = product2;
+        this.product3 = product3;
+        this.product4 = product4;
+        this.product5 = product5;
+        this.product6 = product6;
+        this.product7 = product7;
+        this.product8 = product8;
+        this.product9 = product9;
+        this.product10 = product10;
 
-        this.library.addUser(alice);
-        this.library.addUser(john);
-        this.library.addUser(raven);
 
-        this.alice = alice;
-        this.john = john;
-        this.raven = raven;
+        const customer1 = new Customer(this.logger, `Raven`);
+        const customer2 = new Customer(this.logger, `John`);
+
+        this.customer1 = customer1;
+        this.customer2 = customer2;
+
+
     }
 
     run() {
-        this.alice.borrowBook(this.book1);
-        this.alice.borrowBook(this.book2);
-        this.alice.borrowBook(this.book3);
-        this.alice.borrowBook(this.book4);
-
-        this.john.borrowBook(this.book4);
-        this.john.borrowBook(this.book5);
-        this.john.borrowBook(this.book6);
-        this.john.borrowBook(this.book7);
-
-        this.raven.borrowBook(this.book4);
-        this.raven.borrowBook(this.book7);
-        this.raven.borrowBook(this.book8);
-
-        this.raven.returnBook(this.book8);
-
-
-        this.library.listAvailableBooks();
-        // this.library.listUsers();
+        this.store.listProduct();
     }
 }
 
 const app = new App();
 app.run();
-
