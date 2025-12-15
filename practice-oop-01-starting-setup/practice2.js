@@ -48,9 +48,13 @@ class Product {
     }
 
     decreaseStock(all) {
+        if (all.product.quantity > all.product.product.stock || all.product.product.stock < 0) {
+            all.customer.logger.log(`-------------[WARNING]----------- Quantity number: ${all.product.quantity} can't be bigger than stock number: ${all.product.product.stock}`)
+            return;
+        }
+
         this.stock -= all.product.quantity;
         this.store.processOrder(all)
-        // this.store.logger.log(``)
     }
 }
 
@@ -156,7 +160,7 @@ class App {
         this.product9.increaseStock(12);
         this.product10.increaseStock(55);
 
-        this.customer1.addToCart(this.product1, 5);
+        this.customer1.addToCart(this.product1, 151);
         this.customer1.addToCart(this.product2, 3);
         this.customer1.addToCart(this.product3, 7);
         this.customer1.addToCart(this.product4, 10);
