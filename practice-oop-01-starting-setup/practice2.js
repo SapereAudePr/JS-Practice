@@ -10,12 +10,23 @@ class Customer {
             product,
             quantity,
         }
+
+        if (items.quantity > items.product.stock) {
+            this.logger.log(`-------------[WARNING]----------- Quantity number: ${items.quantity} can't be bigger than the stock number: ${items.product.stock}`)
+            return;
+        }
+
         this.cart.push(items);
+        this.logger.log(`----------[CART ACTIONS]-------- Amount of: ${items.quantity}  ${items.product.name} added to cart by ${this.client}`);
         this.checkout(items);
     }
 
     removeFromCart(product) {
-
+        const index = this.cart.findIndex(item => item.product === product);
+        if (index !== -1) {
+            this.cart.splice(index, 1);
+            this.logger.log(`-------[CART ACTIONS]----------- ${product.name} removed from cart by ${this.client}]`)
+        }
     }
 
     checkout(store) {
@@ -160,10 +171,12 @@ class App {
         this.product9.increaseStock(12);
         this.product10.increaseStock(55);
 
-        this.customer1.addToCart(this.product1, 151);
+        this.customer1.addToCart(this.product1, 5);
         this.customer1.addToCart(this.product2, 3);
         this.customer1.addToCart(this.product3, 7);
         this.customer1.addToCart(this.product4, 10);
+
+        this.customer1.removeFromCart(this.product1)
 
         this.store.listProduct();
     }
