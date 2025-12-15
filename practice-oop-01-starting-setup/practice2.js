@@ -23,13 +23,13 @@ class Customer {
             product: store,
             customer: this,
         }
-        store.product.decreaseStock(all.product.quantity);
+        store.product.decreaseStock(all);
     }
 }
 
 class Product {
-    constructor(logger, name, price, stock) {
-        this.logger = logger;
+    constructor(store, name, price, stock) {
+        this.store = store;
         this.name = name;
         this._price = price;
         this.stock = 0;
@@ -47,8 +47,10 @@ class Product {
         this.stock += amount;
     }
 
-    decreaseStock(amount) {
-        this.stock -= amount;
+    decreaseStock(all) {
+        this.stock -= all.product.quantity;
+        this.store.processOrder(all)
+        // this.store.logger.log(``)
     }
 }
 
@@ -65,11 +67,21 @@ class Store {
 
     listProduct() {
         this.products.forEach(product => {
-            this.logger.log(`[${product.name}] -- ${product.price} -- ${product.stock}]`);
+            this.logger.log(`----------[LISTED PRODUCTS]--------- [${product.name}] -- ${product.price} -- ${product.stock}]`);
         });
     }
 
-    processOrder(customer) {
+    processOrder(all) {
+        const orderList = {
+            client: all.customer.client,
+            quantity: all.product.quantity,
+            product: all.product.product.name,
+        }
+        this.orders.push(orderList);
+
+        const latestOrder = this.orders[this.orders.length - 1];
+
+        this.logger.log(`-------[ORDERS]----------- ${latestOrder.client} ordered ${latestOrder.quantity} amount of ${latestOrder.product}`);
 
     }
 }
@@ -90,16 +102,16 @@ class App {
         this.logger = new Logger();
         this.store = new Store(this.logger);
 
-        const product1 = new Product(this.logger, `Nebula Keycap Set`, 45.99, 150);
-        const product2 = new Product(this.logger, `Emberglow Candle`, 18.45, 320);
-        const product3 = new Product(this.logger, `Quantum Coffee Blend`, 12.75, 45);
-        const product4 = new Product(this.logger, `The Silent Oar Book`, 25.00, 88);
-        const product5 = new Product(this.logger, `Aetherial Socks (3-pack)`, 9.99, 500);
-        const product6 = new Product(this.logger, `Terra-Volt Charger`, 39.95, 110);
-        const product7 = new Product(this.logger, `Chrono-Dial Watch`, 145.00, 22);
-        const product8 = new Product(this.logger, `Zenith Sketchpad`, 6.50, 750);
-        const product9 = new Product(this.logger, `Pocket Meteorite`, 85.30, 12);
-        const product10 = new Product(this.logger, `Whirlwind Blender`, 79.99, 55);
+        const product1 = new Product(this.store, `Nebula Keycap Set`, 45.99, 150);
+        const product2 = new Product(this.store, `Emberglow Candle`, 18.45, 320);
+        const product3 = new Product(this.store, `Quantum Coffee Blend`, 12.75, 45);
+        const product4 = new Product(this.store, `The Silent Oar Book`, 25.00, 88);
+        const product5 = new Product(this.store, `Aetherial Socks (3-pack)`, 9.99, 500);
+        const product6 = new Product(this.store, `Terra-Volt Charger`, 39.95, 110);
+        const product7 = new Product(this.store, `Chrono-Dial Watch`, 145.00, 22);
+        const product8 = new Product(this.store, `Zenith Sketchpad`, 6.50, 750);
+        const product9 = new Product(this.store, `Pocket Meteorite`, 85.30, 12);
+        const product10 = new Product(this.store, `Whirlwind Blender`, 79.99, 55);
 
         this.store.addProduct(product1);
         this.store.addProduct(product2);
