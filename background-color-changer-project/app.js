@@ -4,7 +4,7 @@ style.innerHTML = `
 width: 100px;
 height: 100px;
 padding: 10px 20px;
-margin: 15px;
+margin: 5px;
 border: none;
 border-radius: 50%;
 cursor: pointer;
@@ -13,46 +13,44 @@ transition: box-shadow 0.5s;
 
 .color-buttons:hover {
 opacity: 0.8;
+border: 2px solid gray;
+transition: box-shadow 0.5s;
+
 }
 
-.ul {
+ul {
 list-style-type: none;
-padding: 0;
+align-items: center;
+justify-content: center;
+display: flex;
+margin: 20% auto;
 }
 `
+
 document.head.appendChild(style);
 
 
-const blackBtnHandler = () => {
-    document.body.style.backgroundColor = 'black';
-}
-
-const redBtnHandler = () => {
-    document.body.style.backgroundColor = 'red';
-}
-
-const whiteBtnHandler = () => {
-    document.body.style.backgroundColor = 'white';
+const colorChanger = (color) => {
+    document.body.style.backgroundColor = color;
 }
 
 const blackBtn = document.createElement('button');
 blackBtn.className = `color-buttons`;
 blackBtn.style.backgroundColor = 'black';
 blackBtn.addEventListener('click', () => {
-    blackBtnHandler();
+    colorChanger('black');
 })
 const redBtn = document.createElement('button');
 redBtn.className = `color-buttons`;
 redBtn.style.backgroundColor = 'red';
 redBtn.addEventListener('click', () => {
-        redBtnHandler();
+    colorChanger(`red`)
 })
-
 const whiteBtn = document.createElement('button');
 whiteBtn.className = `color-buttons`;
 whiteBtn.style.backgroundColor = 'white';
 whiteBtn.addEventListener('click', () => {
-    whiteBtnHandler();
+    colorChanger(`white`);
 })
 
 const sectionEl = document.createElement("section");
@@ -66,6 +64,3 @@ divEl.append(ulEl);
 ulEl.append(blackBtn);
 ulEl.append(redBtn);
 ulEl.append(whiteBtn);
-
-
-
