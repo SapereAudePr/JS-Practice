@@ -38,37 +38,7 @@ font-family: monospace;
 margin: 0;
 }
 `
-
 document.head.appendChild(style);
-
-
-const pColorChanger = colour => {
-    p.style.color = colour;
-}
-
-const colorChanger = (bgColour, pColour) => {
-    document.body.style.backgroundColor = bgColour;
-    pColorChanger(pColour);
-}
-
-const blackBtn = document.createElement('button');
-blackBtn.className = `color-buttons`;
-blackBtn.style.backgroundColor = 'black';
-blackBtn.addEventListener('click', () => {
-    colorChanger('black', `white`);
-})
-const redBtn = document.createElement('button');
-redBtn.className = `color-buttons`;
-redBtn.style.backgroundColor = 'red';
-redBtn.addEventListener('click', () => {
-    colorChanger(`red`, `white`)
-})
-const whiteBtn = document.createElement('button');
-whiteBtn.className = `color-buttons`;
-whiteBtn.style.backgroundColor = 'white';
-whiteBtn.addEventListener('click', () => {
-    colorChanger(`white`, `black`);
-})
 
 const sectionEl = document.createElement("section");
 document.body.append(sectionEl);
@@ -84,8 +54,32 @@ sectionEl.append(divEl);
 const ulEl = document.createElement("ul");
 divEl.append(ulEl);
 
+const pColorChanger = colour => {
+    p.style.color = colour;
+}
+
+const colorChanger = (bgColour, pColour) => {
+    document.body.style.backgroundColor = bgColour;
+    pColorChanger(pColour);
+}
+
+const themes = [
+    {name: `black`, text: `white`},
+    {name: `red`, text: `white`},
+    {name: `white`, text: `black`},
+    {name: `green`, text: `black`},
+]
+
+themes.forEach(theme => {
+    const btn = document.createElement('button');
+    btn.className = `color-buttons`;
+    btn.style.backgroundColor = theme.name;
+
+    btn.addEventListener('click', () => {
+        colorChanger(theme.name, theme.text);
+    });
+
+    ulEl.appendChild(btn);
+});
 
 
-ulEl.append(blackBtn);
-ulEl.append(redBtn);
-ulEl.append(whiteBtn);
