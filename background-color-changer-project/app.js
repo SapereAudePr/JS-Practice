@@ -1,85 +1,130 @@
-const style = document.createElement('style');
-style.innerHTML = `
 
+
+class Element {
+    constructor() {
+
+    }
+
+    createStyle() {
+        const style = document.createElement('style');
+        style.innerHTML = `
 section {
 display: flex;
-flex-direction: column;
-justify-content: center;
+flex-direction: row;
 align-items: center;
-margin-top: 20%;
+justify-content: center;
+margin-top: 25rem;
 }
 
 .color-buttons {
-width: 100px;
-height: 100px;
-padding: 10px 20px;
-margin: 10px;
-border: none;
+width: 150px;
+height: 150px;
 border-radius: 50%;
-cursor: pointer;
-transition: box-shadow 0.5s;
-}
-
-.color-buttons:hover {
-opacity: 0.8;
-border: 2px solid gray;
-transition: box-shadow 0.5s;
+border: none;
+margin: 5px;
 }
 
 ul {
-display: flex;
-padding: 0;
-margin-top: 20px;
+list-style-type: none;
 }
 
 p {
-font-size: 30px;
-font-family: monospace;
-margin: 0;
+font-family: sans-serif;
+font-size: 50px;
 }
 `
-document.head.appendChild(style);
+        document.head.append(style);
+        this.createElement();
+    }
 
-const sectionEl = document.createElement("section");
-document.body.append(sectionEl);
-
-const p = document.createElement("p");
-p.textContent = 'Click Me!';
-
-sectionEl.append(p);
-
-const divEl = document.createElement("div");
-sectionEl.append(divEl);
-
-const ulEl = document.createElement("ul");
-divEl.append(ulEl);
-
-const pColorChanger = colour => {
-    p.style.color = colour;
+    createElement() {
+        const sectionEl = document.createElement('section');
+        document.body.append(sectionEl);
+        const divEl = document.createElement('div');
+        divEl.id = 'divId';
+        sectionEl.append(divEl);
+    }
 }
 
-const colorChanger = (bgColour, pColour) => {
-    document.body.style.backgroundColor = bgColour;
-    pColorChanger(pColour);
+class Button {
+    constructor() {
+
+    }
+
+    changePColor(color) {
+        const text = document.querySelector(`p`);
+        text.style.color = color.color2;
+    }
+
+    changeBgColor(color) {
+        document.body.style.background = color.color1;
+        this.changePColor(color);
+    }
+
+    createButton(theme) {
+        const text = document.createElement(`p`)
+        text.textContent = `Click me!`
+
+        const divEl = document.getElementById(`divId`)
+        divEl.append(text);
+
+        theme.forEach((color1, color2) => {
+            const button = document.createElement("button");
+            button.className = `color-buttons`
+
+            button.style.backgroundColor = color1.color1;
+            text.style.backgroundColor = color2.color2;
+
+            const divEl = document.getElementById(`divId`);
+            divEl.append(button);
+
+            button.addEventListener("click", () => {
+                this.changeBgColor(color1);
+            })
+        })
+    }
+
+
 }
 
-const themes = [
-    {name: `black`, text: `white`},
-    {name: `red`, text: `white`},
-    {name: `white`, text: `black`},
-    {name: `green`, text: `black`},
-]
+class Theme {
+    constructor(theme, buttonInstance) {
+        this.theme = [];
+        this.buttonInstance = buttonInstance;
+    }
 
-themes.forEach(theme => {
-    const btn = document.createElement('button');
-    btn.className = `color-buttons`;
-    btn.style.backgroundColor = theme.name;
-
-    btn.addEventListener('click', () => {
-        colorChanger(theme.name, theme.text);
-    });
-
-    ulEl.appendChild(btn);
-});
+    createTheme(theme) {
+        this.theme.push(theme);
+        this.buttonInstance.createButton(theme);
+    }
+}
 
 
+class App {
+    constructor() {
+        const element = new Element();
+        this.element = element;
+
+        const button = new Button();
+        const themes =
+            [{color1: `black`, color2: `white`},
+                {color1: `white`, color2: `black`},
+                {color1: `red`, color2: `white`},
+            ];
+
+        this.themes = themes;
+
+        const theme = new Theme(themes, button);
+        this.theme = theme;
+
+
+    }
+
+    run() {
+        this.element.createStyle();
+        this.theme.createTheme(this.themes)
+    }
+}
+
+const app = new App();
+app.run();
