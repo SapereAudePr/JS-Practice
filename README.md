@@ -4,7 +4,7 @@ A collection of exercises and small projects from when I was learning front-end 
 
 ## Status
 
-⏸️ **Currently paused.** I shifted focus to .NET backend development, so this repo isn't actively updated right now. I still have working knowledge of HTML, CSS, and JavaScript fundamentals, and plan to pick front-end back up once I'm solid on the backend side.
+**Currently paused.** I shifted focus to .NET backend development, so this repo isn't actively updated right now. I still have working knowledge of HTML, CSS, and JavaScript fundamentals, and plan to pick front-end back up once I'm solid on the backend side.
 
 ## Contents
 
